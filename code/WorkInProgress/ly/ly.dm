@@ -1,0 +1,41 @@
+/obj/item/instrument/bikehorn/hector
+	health = 2
+	notes = list("c4")
+	sounds_instrument = list('code/WorkInProgress/ly/sounds/hector-bell.ogg')
+	randomized_pitch = 0
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	c_flags = 0
+	desc_verb = list("dings")
+	desc_sound = list("old man's")
+	desc_music = list("bell")
+	note_time = 0
+	note_range = list("c2", "c7")
+	screen_loc = "CENTER+0:15, SOUTH:5"
+	name = "hector's bell"
+	desc = "Ding ding ding!"
+	icon = 'icons/obj/items/bell.dmi'
+	icon_state = "bell"
+	dir = 8
+/obj/item/instrument/bikehorn/kity
+	health = 2
+	notes = list("c4")
+	sounds_instrument = list('code/WorkInProgress/ly/sounds/guaw.ogg')
+	randomized_pitch = 1
+	inhand_image_icon = 'code/WorkInProgress/ly/icons/kity.dmi'
+	c_flags = 0
+	desc_verb = list("meows")
+	desc_sound = list("terrible")
+	desc_music = list("meow")
+	note_time = 0
+	note_range = list("c2", "c7")
+	screen_loc = "CENTER+0:15, SOUTH:5"
+	name = "kity"
+	desc = "<img src='https://i.postimg.cc/0j72t8xq/kity.png'><br>"
+	icon = 'code/WorkInProgress/ly/icons/kity.dmi'
+	icon_state = "bell"
+	dir = 8
+	force = 9999999
+	force_use_as_tool = 9999999
+	throwforce = 9999999
+	hitsound = list('code/WorkInProgress/ly/sounds/guaw.ogg')
+	leaves_slash_wound = 1
