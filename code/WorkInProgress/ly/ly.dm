@@ -1,41 +1,80 @@
+// if you are reading this, this is a bunch of in-jokes and misc goofy shit for ly and i to be silly with on a local server
+
 /obj/item/instrument/bikehorn/hector
-	health = 2
+	name = "hector's bell"
+	desc = "Ding ding ding!"
+	icon = 'icons/obj/items/bell.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	icon_state = "bell"
 	notes = list("c4")
 	sounds_instrument = list('code/WorkInProgress/ly/sounds/hector-bell.ogg')
 	randomized_pitch = 0
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	c_flags = 0
 	desc_verb = list("dings")
 	desc_sound = list("old man's")
 	desc_music = list("bell")
 	note_time = 0
 	note_range = list("c2", "c7")
-	screen_loc = "CENTER+0:15, SOUTH:5"
-	name = "hector's bell"
-	desc = "Ding ding ding!"
-	icon = 'icons/obj/items/bell.dmi'
-	icon_state = "bell"
-	dir = 8
+
 /obj/item/instrument/bikehorn/kity
-	health = 2
+	name = "kity"
+	desc = "<img src='https://i.postimg.cc/0j72t8xq/kity.png'><br>"
+	icon = 'code/WorkInProgress/ly/icons/32x32.dmi'
+	inhand_image_icon = 'code/WorkInProgress/ly/icons/32x32.dmi'
+	icon_state = "kity"
+	item_state = "kity"
 	notes = list("c4")
 	sounds_instrument = list('code/WorkInProgress/ly/sounds/guaw.ogg')
-	randomized_pitch = 1
-	inhand_image_icon = 'code/WorkInProgress/ly/icons/kity.dmi'
-	c_flags = 0
+	hitsound = list('code/WorkInProgress/ly/sounds/guaw.ogg')
 	desc_verb = list("meows")
 	desc_sound = list("terrible")
 	desc_music = list("meow")
 	note_time = 0
 	note_range = list("c2", "c7")
-	screen_loc = "CENTER+0:15, SOUTH:5"
-	name = "kity"
-	desc = "<img src='https://i.postimg.cc/0j72t8xq/kity.png'><br>"
-	icon = 'code/WorkInProgress/ly/icons/kity.dmi'
-	icon_state = "bell"
-	dir = 8
 	force = 9999999
 	force_use_as_tool = 9999999
 	throwforce = 9999999
-	hitsound = list('code/WorkInProgress/ly/sounds/guaw.ogg')
 	leaves_slash_wound = 1
+
+/obj/gibshark/kity
+	name = "kity"
+	desc = "It's so over"
+	icon = 'code/WorkInProgress/ly/icons/64x64.dmi'
+	icon_state = "kity"
+
+	process()
+		while (!disposed)
+			if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
+				for(var/mob/O in AIviewers(src, null))
+					O.show_message(SPAN_ALERT("<B>[src]</B> bites [sharktarget2]!"), 1)
+				sharktarget2.changeStatus("weakened", 1 SECOND)
+				sharktarget2.changeStatus("stunned", 10 SECONDS)
+				playsound(src.loc, 'code/WorkInProgress/ly/sounds/guaw.ogg', 50, 1, -1)
+				gibproc()
+				return
+			else
+				walk_towards(src, src.sharktarget2, sharkspeed)
+				sleep(1 SECOND)
+
+/client/proc/kitygib(mob/kitytarget as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Kity Gib"
+	set popup_menu = 0
+	var/startx = 1
+	var/starty = 1
+	if(!isadmin(src))
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	var/speed = input(usr,"How fast is the kity? Lower is faster.","speed","5") as num
+	if(!speed)
+		return
+
+	sleep(1 SECONDS)
+	startx = kitytarget.x - rand(-11, 11)
+	starty = kitytarget.y - rand(-11, 11)
+
+	var/turf/pickedstart = locate(startx, starty, kitytarget.z)
+	var/obj/gibshark/kity/Q = new /obj/gibshark/kity(pickedstart)
+	Q.sharktarget2 = kitytarget
+	Q.caller = usr
+	Q.sharkspeed = speed
