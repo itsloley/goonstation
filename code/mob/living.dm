@@ -1914,6 +1914,17 @@
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
+	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_TOYREFLECTPROT) && istype(P.proj_data,/datum/projectile/bullet/foamdart))
+		var/obj/item/equipped = src.equipped()
+		var/obj/projectile/Q = shoot_reflected_bounce(P, src)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/effects/syringeproj.ogg',80, 0.1, 0, 3)
+		return 0
+
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
 		src.visible_message(SPAN_ALERT("A divine light absorbs the magical projectile!"))
 		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
@@ -2274,8 +2285,13 @@
 
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
-	return 1 // that's the standard absorption rate
+	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate
 
 /mob/living/was_built_from_frame(mob/user, newly_built)
 	. = ..()
 	src.is_npc = TRUE
+
+/mob/living/proc/apply_roundstart_events()
+	for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+		if(RE.include_latejoin && RE.is_crew_affected(src))
+			RE.apply_to_player(src)
