@@ -716,6 +716,12 @@
 					playsound(src, 'sound/vox/high.ogg', 50)
 					sleep(0.4 SECONDS)
 					playsound(src, 'sound/vox/explosive.ogg', 50)
+			if ("kity")
+				src.budgun.set_current_projectile(new/datum/projectile/bullet/kity)
+				src.budgun.current_projectile.cost = 100
+				SPAWN(1 SECOND)
+					speak("KITY KITYS?!?!?!")
+					playsound(src, 'sound/vox/kity.ogg', 30)
 		src.budgun.UpdateIcon()
 		src.UpdateIcon()
 		src.slept_through_becoming_the_law = 0

@@ -1278,7 +1278,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse, "kity" = new/datum/projectile/bullet/kity)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
@@ -1388,6 +1388,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, 'sound/vox/push.ogg', 50)
+				if ("cat", "kity", "kitty")
+					set_current_projectile(projectiles["kity"])
+					item_state = "lawg-clownshot"
+					playsound(M, 'sound/vox/kity.ogg', 50)
 
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
@@ -1463,6 +1467,9 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			else if (current_projectile.type == /datum/projectile/energy_bolt/pulse)		//clownshot - pink
 				indicator_display.color = "#EEEEFF"
 				muzzle_flash = "muzzle_flash_bluezap"
+			else if (current_projectile.type == /datum/projectile/bullet/kity)
+				indicator_display.color = "#FFC0CB"
+				muzzle_flash = "muzzle_flash"
 			else
 				indicator_display.color = "#000000"				//default, should never reach. make it black
 			src.overlays += indicator_display
