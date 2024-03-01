@@ -1575,6 +1575,13 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	glass_style = "flute"
 	initial_volume = 20
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/milkshake
+	name = "milkshake glass"
+	desc = "A tall glass designed for serving and consuming milkshakes."
+	icon_state = "glass-milkshake"
+	glass_style = "milkshake"
+	initial_volume = 50
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher
 	name = "glass pitcher"
 	desc = "A big container for holding a lot of liquid that you then serve to people. Probably alcohol, let's be honest."
