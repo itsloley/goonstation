@@ -218,16 +218,17 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 
 /obj/submachine/ice_cream_dispenser
 	name = "Ice Cream Dispenser"
-	desc = "A machine designed to dispense space ice cream."
+	desc = "A machine designed to dispense space ice cream and milkshakes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "ice_creamer0"
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH | TGUI_INTERACTIVE
-	var/list/flavors = list("chocolate","vanilla","coffee")
+	var/list/flavors = list("vanilla", "chocolate", "strawberry_milk", "mint", "coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
+	var /obj/item/reagent_containers/food/drinks/drinkingglass/milkshake/ = null
 	var/doing_a_thing = 0
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -246,6 +247,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
 			flavorsTemp.Add(list(list(
 				name = current_reagent.name,
+				id = reagent,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
 				colorB = current_reagent.fluid_b
@@ -257,13 +259,13 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	ui_data(mob/user)
 		. = list(
 			"beaker" = ui_describe_reagents(src.beaker),
-			"cone" = src.cone
+			"cone" = src.cone,
+			"milkshake" = src.milkshake
 		)
 
 	ui_act(action, params)
 		. = ..()
-		if (.)
-			return
+		if (.) return
 
 		if (istype(src.loc, /turf) && (( BOUNDS_DIST(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -272,8 +274,9 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				return
 
 		src.add_fingerprint(usr)
+
 		switch(action)
-			if("eject_cone")
+			if("eject_cone") // eject the ice cream cone
 				var/obj/item/target = src.cone
 				if (!target)
 					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
@@ -283,26 +286,57 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				src.cone = null
 				src.UpdateIcon()
 				. = TRUE
-
-			if("eject_beaker")
+			if("eject_milkshake") // eject the milkshake glass
+				var/obj/item/target = src.milkshake
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no milkshake glass loaded!"))
+					return
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the milkshake glass from [src]."))
+				src.milkshake = null
+				src.UpdateIcon()
+				. = TRUE
+			if("eject_beaker") // eject the beaker
 				var/obj/item/target = src.beaker
 				if (!target)
 					boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
 					return
-
 				usr.put_in_hand_or_eject(target)
-				boutput(usr, SPAN_NOTICE("You have removed the beaker from [src]."))
+				boutput(usr, SPAN_NOTICE("You have removed [src.beaker] from [src]."))
 				src.beaker = null
 				src.UpdateIcon()
 				. = TRUE
 
+			if ("insert_item")
+				var/obj/item/reagent_containers/heldItem = usr.equipped()
+
+				// try to insert a cone first
+				if (istype(heldItem, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
+					if (!heldItem.cant_drop)
+						usr.drop_item()
+						heldItem.set_loc(src)
+						src.cone = heldItem
+						boutput(usr, SPAN_NOTICE("You load the cone into [src]."))
+						src.UpdateIcon()
+						. = TRUE
+				// try to insert a milkshake glass
+				else if (istype(heldItem, /obj/item/reagent_containers/food/drinks/drinkingglass/milkshake))
+					if (!heldItem.cant_drop)
+						usr.drop_item()
+						heldItem.set_loc(src)
+						src.milkshake = heldItem
+						boutput(usr, SPAN_NOTICE("You load the milkshake glass into [src]."))
+						src.UpdateIcon()
+						. = TRUE
+
 			if("insert_beaker")
 				var/obj/item/reagent_containers/newbeaker = usr.equipped()
-				if (istype(newbeaker, /obj/item/reagent_containers/glass/) || istype(newbeaker, /obj/item/reagent_containers/food/drinks/))
+				if (istype(newbeaker, /obj/item/reagent_containers/glass/))
 					if(!newbeaker.cant_drop)
 						usr.drop_item()
 						newbeaker.set_loc(src)
 					src.beaker = newbeaker
+					boutput(usr, SPAN_NOTICE("You load [src.beaker] into [src]."))
 					src.UpdateIcon()
 					. = TRUE
 
@@ -319,8 +353,10 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 						return
 
 					beaker.reagents.trans_to(newcream,40)
+					playsound(src.loc, 'sound/effects/splort.ogg', 50, 1, 0.3)
 				else if(flavor in src.flavors)
 					newcream.reagents.add_reagent(flavor,40)
+					playsound(src.loc, 'sound/effects/splort.ogg', 50, 1, 0.3)
 
 				usr.put_in_hand_or_eject(newcream)
 				src.cone = null
@@ -337,19 +373,39 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 			return
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
-			if(src.cone)
-				boutput(user, "There is already a cone loaded.")
-				return
+			if (!src.milkshake)
+				if(src.cone)
+					boutput(user, "There is already a cone loaded.")
+					return
+				else
+					user.drop_item()
+					W.set_loc(src)
+					src.cone = W
+					boutput(user, SPAN_NOTICE("You load the cone into [src]."))
+
+				src.UpdateIcon()
+				tgui_process.update_uis(src)
 			else
-				user.drop_item()
-				W.set_loc(src)
-				src.cone = W
-				boutput(user, SPAN_NOTICE("You load the cone into [src]."))
+				boutput(user, "There is already a milkshake glass loaded.")
+
+
+		if (istype(W, /obj/item/reagent_containers/food/drinks/drinkingglass/milkshake))
+			if (!src.cone)
+				if(src.milkshake)
+					boutput(user, "There is already a milkshake glass loaded.")
+					return
+				else
+					user.drop_item()
+					W.set_loc(src)
+					src.milkshake = W
+					boutput(user, SPAN_NOTICE("You load the milkshake glass into [src]."))
+			else
+				boutput(user, "There is already a cone loaded.")
 
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
 
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+		else if (istype(W, /obj/item/reagent_containers/glass/))
 			if(src.beaker)
 				boutput(user, "There is already a beaker loaded.")
 				return
@@ -357,24 +413,29 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				user.drop_item()
 				W.set_loc(src)
 				src.beaker = W
-				boutput(user, SPAN_ALERT("You load [W] into [src]."))
+				boutput(user, SPAN_NOTICE("You load [W] into [src]."))
 
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/drinkingglass/milkshake)) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
 	update_icon()
-		if(src.beaker)
+		if (src.beaker)
 			src.overlays += image(src.icon, "ice_creamer_beaker")
 		else
 			src.overlays.len = 0
 
-		src.icon_state = "ice_creamer[src.cone ? "1" : "0"]"
+		if (src.cone)
+			src.icon_state = "ice_creamer1"
+		else if (src.milkshake)
+			src.icon_state = "ice_creamer2"
+		else
+			src.icon_state = "ice_creamer0"
 
 		return
 

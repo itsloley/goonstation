@@ -23,7 +23,7 @@ export const StandardFlavors = (props, context) => {
           align="left"
           width="130px"
           m=".1rem"
-          onClick={() => act("make_ice_cream", { flavor: flavor.name })}
+          onClick={() => act("make_ice_cream", { flavor: flavor.id })}
         >
           <Icon
             color={"rgba(" + flavor.colorR + "," + flavor.colorG + ", " + flavor.colorB + ", 1)"}
@@ -41,6 +41,7 @@ export const StandardFlavors = (props, context) => {
 export const BeakerFlavor = (props, context) => {
   const { act, data } = useBackend(context);
   const beaker = data.beaker;
+  const milkshake = data.milkshake;
 
   return (
     <Section title="Custom Flavor" fill>
@@ -55,7 +56,7 @@ export const BeakerFlavor = (props, context) => {
             disabled={!beaker || !beaker.totalVolume}
             tooltip={beaker && !beaker.totalVolume ? "Beaker Is Empty" : ""}
             onClick={() => act("make_ice_cream", { flavor: "beaker" })}>
-            Make Custom Ice Cream
+            Make Custom {milkshake ? "Milkshake" : "Ice Cream"}
           </Button>
         </Flex.Item>
         <Flex.Item>
@@ -73,14 +74,27 @@ export const BeakerFlavor = (props, context) => {
 };
 
 export const IceCreamMachine = (props, context) => {
-  const { data } = useBackend(context);
+  const { act, data } = useBackend(context);
   const cone = data.cone;
+  const milkshake = data.milkshake;
+
+  const EjectItem = () => {
+    if (cone) {
+      act("eject_cone");
+    } else {
+      act("eject_milkshake");
+    }
+  };
+
+  const InsertItem = () => {
+    act("insert_item");
+  };
 
   return (
     <Window
       title="Ice Cream-O-Mat 6300"
       width={440}
-      height={275}>
+      height={300}>
       <Window.Content>
         <Stack m="0.25rem" vertical fill>
           <Stack.Item>
@@ -94,9 +108,14 @@ export const IceCreamMachine = (props, context) => {
               mt="0.5rem"
               icon="eject"
               className="chem-dispenser__buttons"
-              disabled={!cone}
-              onClick={() => act("eject_cone")} >
-              Eject Cone
+              onClick={() => {
+                if (cone || milkshake) {
+                  EjectItem();
+                } else {
+                  InsertItem();
+                }
+              }}>
+              {cone || milkshake ? `Eject ${milkshake ? "Milkshake Glass" : "Cone"}` : `Insert Cone or Milkshake Glass`}
             </Button>
           </Stack.Item>
         </Stack>
