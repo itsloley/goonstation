@@ -34,6 +34,7 @@
 	force_use_as_tool = 9999999
 	throwforce = 9999999
 	leaves_slash_wound = 1
+	default_material = "kity"
 
 /obj/gibshark/kity
 	name = "kity"

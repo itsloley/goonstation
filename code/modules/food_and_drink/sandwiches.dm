@@ -637,3 +637,4 @@
 	initial_volume = 500
 	initial_reagents = list("saxitoxin"=500)
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	default_material = "jean"

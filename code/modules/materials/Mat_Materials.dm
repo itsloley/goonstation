@@ -1944,3 +1944,16 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 2)
 		setProperty("thermal", 3)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())
+
+/datum/material/organic/kity
+	mat_id = "kity"
+	name = "kity"
+	desc = "Wow. Okay."
+	color = "#ffca75"
+	texture = "code/WorkInProgress/ly/icons/kityoverlay.dmi"
+	texture_blend = BLEND_MULTIPLY
+
+	New()
+		..()
+		setProperty("flammable", 6)
+		setProperty("thermal", 7)
