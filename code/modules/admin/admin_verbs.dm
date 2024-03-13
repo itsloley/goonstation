@@ -295,6 +295,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_elecgib,
 		/client/proc/sharkgib,
 		/client/proc/kitygib,
+		/client/proc/iriosgib,
 		/client/proc/cmd_admin_icegib,
 		/client/proc/cmd_admin_goldgib,
 		/client/proc/cmd_admin_spidergib,
@@ -483,6 +484,7 @@ var/list/admin_verbs = list(
 		/client/proc/TestMarketReq,
 		/verb/adminDumpBlueprint,
 		/client/proc/debug_event_recorder,
+		/client/proc/debug_api_handler,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,

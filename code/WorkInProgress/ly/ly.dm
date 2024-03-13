@@ -79,3 +79,48 @@
 	Q.sharktarget2 = kitytarget
 	Q.caller = usr
 	Q.sharkspeed = speed
+
+/obj/gibshark/irios
+	name = "ULTRA IRIOS"
+	desc = "IT'S ULTRA IRIOS"
+	icon = 'code/WorkInProgress/ly/icons/64x64.dmi'
+	icon_state = "IRIOS"
+
+	process()
+		while (!disposed)
+			if ((BOUNDS_DIST(src, src.sharktarget2) == 0))
+				for(var/mob/O in AIviewers(src, null))
+					O.show_message(SPAN_ALERT("<B>[src]</B> OBLITERATES [sharktarget2]!"), 1)
+				sharktarget2.changeStatus("weakened", 1 SECOND)
+				sharktarget2.changeStatus("stunned", 10 SECONDS)
+				sharktarget2.client.sound_playing[VOLUME_CHANNEL_ADMIN][1] = 0
+				gibproc()
+				return
+			else
+				walk_towards(src, src.sharktarget2, sharkspeed)
+				sleep(1 SECOND)
+
+/client/proc/iriosgib(mob/iriostarget as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Ultra Irios Gib"
+	set popup_menu = 0
+	var/startx = 1
+	var/starty = 1
+	if(!isadmin(src))
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	var/speed = input(usr,"How fast is the irio? Lower is faster.","speed","5") as num
+	if(!speed)
+		return
+
+	iriostarget.playsound_local_not_inworld('code/WorkInProgress/ly/sounds/IRIOS_short.ogg', 100, 0, 1, 0, VOLUME_CHANNEL_ADMIN)
+	sleep(1 SECONDS)
+	startx = iriostarget.x - rand(-11, 11)
+	starty = iriostarget.y - rand(-11, 11)
+
+	var/turf/pickedstart = locate(startx, starty, iriostarget.z)
+	var/obj/gibshark/irios/Q = new /obj/gibshark/irios(pickedstart)
+	Q.sharktarget2 = iriostarget
+	Q.caller = usr
+	Q.sharkspeed = speed
