@@ -2242,7 +2242,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/brownie_batch/
 
 /datum/cookingrecipe/oven/kityburger
-	item1 = /obj/item/instrument/bikehorn/kity
+	item1 = /obj/item/kity
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/kityburger

@@ -71490,7 +71490,7 @@
 /area/moon/museum)
 "tED" = (
 /obj/stool/bee_bed,
-/obj/item/instrument/bikehorn/kity,
+/obj/item/kity,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/eastwest,
 /area/titlescreen)
 "tFx" = (

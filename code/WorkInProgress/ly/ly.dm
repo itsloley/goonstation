@@ -15,26 +15,32 @@
 	note_time = 0
 	note_range = list("c2", "c7")
 
-/obj/item/instrument/bikehorn/kity
+/obj/item/kity
 	name = "kity"
 	desc = "<img src='https://i.postimg.cc/0j72t8xq/kity.png'><br>"
 	icon = 'code/WorkInProgress/ly/icons/32x32.dmi'
-	inhand_image_icon = 'code/WorkInProgress/ly/icons/32x32.dmi'
 	icon_state = "kity"
-	item_state = "kity"
-	notes = list("c4")
-	sounds_instrument = list('code/WorkInProgress/ly/sounds/guaw.ogg')
-	hitsound = list('code/WorkInProgress/ly/sounds/guaw.ogg')
-	desc_verb = list("meows")
-	desc_sound = list("terrible")
-	desc_music = list("meow")
-	note_time = 0
-	note_range = list("c2", "c7")
-	force = 9999999
-	force_use_as_tool = 9999999
-	throwforce = 9999999
-	leaves_slash_wound = 1
-	default_material = "kity"
+	inhand_image_icon = 'code/WorkInProgress/ly/icons/32x32.dmi'
+	w_class = W_CLASS_TINY
+	hit_type = DAMAGE_CUT
+	throwforce = INFINITY
+	force = INFINITY
+	stamina_damage = INFINITY
+	stamina_cost = 0
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
+			playsound(target.loc, 'code/WorkInProgress/ly/sounds/guaw.ogg', 50, 1)
+			target.gib()
+		..()
+
+	attack_self(mob/user as mob)
+		playsound(src.loc, 'code/WorkInProgress/ly/sounds/guaw.ogg', 50, 1)
+		..()
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/slam)
 
 /obj/gibshark/kity
 	name = "kity"

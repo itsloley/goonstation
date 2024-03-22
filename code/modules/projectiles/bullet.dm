@@ -1965,7 +1965,7 @@ datum/projectile/bullet/autocannon
 	cost = 0
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	implanted =  /obj/item/instrument/bikehorn/kity
+	implanted =  /obj/item/kity
 	shot_sound = 'code/WorkInProgress/ly/sounds/guaw.ogg'
 	impact_image_state = "bullethole-staple"
 	casing = null
