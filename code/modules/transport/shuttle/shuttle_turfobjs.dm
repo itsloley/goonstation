@@ -108,12 +108,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	connects_to_exceptions = list()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/false_wall,
 		/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner
-	))
-	connects_with_overlay = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced,
-		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn
 	))
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"
@@ -189,6 +185,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	pixel_y = -64
 	opacity = 0
 	plane = PLANE_DEFAULT
+	transform = matrix(0.5,0.5,-24,-0.25,0.25,-48)
 
 /turf/simulated/shuttle/wall/cockpit/window
 	name = "shuttle wall"
