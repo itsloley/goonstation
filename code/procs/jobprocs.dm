@@ -413,15 +413,15 @@ var/global/totally_random_jobs = FALSE
 	else if (length(JOB.slot_rhan))
 		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
 
-	#ifdef APRIL_FOOLS
-	H.back?.setMaterial(getMaterial("jean"))
-	H.gloves?.setMaterial(getMaterial("jean"))
-	H.wear_suit?.setMaterial(getMaterial("jean"))
-	H.wear_mask?.setMaterial(getMaterial("jean"))
-	H.w_uniform?.setMaterial(getMaterial("jean"))
-	H.shoes?.setMaterial(getMaterial("jean"))
-	H.head?.setMaterial(getMaterial("jean"))
-	#endif
+	//#ifdef APRIL_FOOLS
+	//H.back?.setMaterial(getMaterial("jean"))
+	//H.gloves?.setMaterial(getMaterial("jean"))
+	//H.wear_suit?.setMaterial(getMaterial("jean"))
+	//H.wear_mask?.setMaterial(getMaterial("jean"))
+	//H.w_uniform?.setMaterial(getMaterial("jean"))
+	//H.shoes?.setMaterial(getMaterial("jean"))
+	//H.head?.setMaterial(getMaterial("jean"))
+	//#endif
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
@@ -601,13 +601,13 @@ var/global/totally_random_jobs = FALSE
 /// Equip items from sensory traits
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
-		src.drop_from_slot(src.glasses)
+		src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
-		src.drop_from_slot(src.glasses)
+		src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
-		src.drop_from_slot(src.ears)
+		src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
@@ -802,6 +802,9 @@ var/global/totally_random_jobs = FALSE
 		PDA.owner = src.real_name
 		PDA.ownerAssignment = JOB.name
 		PDA.name = "PDA-[src.real_name]"
+
+		if(src.mind)
+			src.mind.originalPDA = PDA
 
 	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)
