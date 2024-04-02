@@ -295,6 +295,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_firegib,
 		/client/proc/cmd_admin_elecgib,
 		/client/proc/sharkgib,
+		/client/proc/kitygib,
+		/client/proc/iriosgib,
 		/client/proc/cmd_admin_icegib,
 		/client/proc/cmd_admin_goldgib,
 		/client/proc/cmd_admin_spidergib,

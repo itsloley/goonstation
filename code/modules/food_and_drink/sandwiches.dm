@@ -628,3 +628,13 @@
 	icon_state = "chickenburger-spicy"
 	initial_reagents = list("capsaicin"=15)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/burger/kityburger
+	name = "kity burger"
+	icon = 'code/WorkInProgress/ly/icons/32x32.dmi'
+	desc = "OHOHOHO KITY!!!!!!!!!"
+	icon_state = "kityburger"
+	initial_volume = 500
+	initial_reagents = list("saxitoxin"=500)
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	default_material = "jean"

@@ -895,7 +895,7 @@
 		process()	// ensure bot quickly responds to a perp
 
 	proc/YellAtPerp()
-		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
+		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg', 'code/WorkInProgress/ly/sounds/bworstreferenceever.ogg')
 		src.point(src.target, 1)
 		src.speak("Level [src.threatlevel] infraction alert!")
 		switch(saything)
@@ -905,6 +905,8 @@
 				src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
+			if('code/WorkInProgress/ly/sounds/bworstreferenceever.ogg')
+				src.speak("I AM COMING READY OR NOR HERE I COME.")
 		playsound(src, saything, 50, FALSE)
 
 	proc/weeoo()

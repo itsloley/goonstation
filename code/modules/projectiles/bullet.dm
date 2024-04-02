@@ -1960,6 +1960,27 @@ datum/projectile/bullet/autocannon
 			hit.ex_act(pick(1,2))
 		. = ..()
 
+/datum/projectile/bullet/kity //Assday only.
+	name = "KITY"
+	sname = "KITY"
+	damage = 9999
+	cost = 0
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	implanted =  /obj/item/kity
+	shot_sound = 'code/WorkInProgress/ly/sounds/guaw.ogg'
+	impact_image_state = "bullethole-staple"
+	casing = null
+	hit_ground_chance = 0
+	icon = 'code/WorkInProgress/ly/icons/64x64.dmi'
+	icon_state = "kity"
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		if (T)
+			T.hotspot_expose(700,125)
+			explosion_new(null, T, 300, 1)
+		return
 /datum/projectile/bullet/webley
 	name = "bullet"
 	damage = 45

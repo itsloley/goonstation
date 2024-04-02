@@ -259,7 +259,9 @@
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
 						<a href='[playeropt_link(M, "rapture")]'>Rapture</a> &bull;
-						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a>
+						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a> &bull;
+						<a href='[playeropt_link(M, "kitygib")]'>Kity</a> &bull;
+						<a href='[playeropt_link(M, "iriosgib")]'>Ultra Irios</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>

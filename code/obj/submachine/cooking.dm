@@ -601,6 +601,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/ultrachili(src)
 			src.recipes += new /datum/cookingrecipe/oven/aburgination(src)
 			src.recipes += new /datum/cookingrecipe/oven/baconator(src)
+			src.recipes += new /datum/cookingrecipe/oven/kityburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/butterburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheeseburger_m(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheeseburger(src)
