@@ -1447,17 +1447,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				item_state = "lawg-clownshot"
 				playsound(M, 'sound/vox/kity.ogg', 50)
 				src.toggle_recoil(FALSE)
-		else		//if you're not the owner and try to change it, then fuck you
-			switch(text)
-				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
-					random_burn_damage(M, 50)
-					M.changeStatus("weakened", 4 SECONDS)
-					elecflash(src,power=2)
-					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
-					return
-
-		M.update_inhands()
-		UpdateIcon()
 
 	//Are you really the law? takes the mob as speaker, and the text spoken, sanitizes it. If you say "i am the law" and you in fact are NOT the law, it's gonna blow. Moved out of the switch statement because it that switch is only gonna run if the owner speaks
 	proc/are_you_the_law(mob/M as mob, text)
