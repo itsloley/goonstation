@@ -38,7 +38,7 @@
 	heal_amt = 2
 	fill_amt = 20 //2 per slice
 	use_bite_mask = FALSE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
@@ -82,11 +82,11 @@
 					tag = "cake[clayer]-lime"
 				if(/obj/item/reagent_containers/food/snacks/plant/strawberry)
 					tag = "cake[clayer]-strawberry"
-				if(/obj/item/reagent_containers/food/snacks/plant/blackberry)
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry)
 					tag = "cake[clayer]-blackberry"
 				if(/obj/item/reagent_containers/food/snacks/plant/raspberry)
 					tag = "cake[clayer]-raspberry"
-				if(/obj/item/reagent_containers/food/snacks/plant/blueraspberry)
+				if(/obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry)
 					tag = "cake[clayer]-braspberry"
 
 		if(tag && src.GetOverlayImage(tag)) //if there's a duplicate non-generic overlay, return a list of empty data

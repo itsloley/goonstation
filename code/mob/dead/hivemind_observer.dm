@@ -17,7 +17,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -37,7 +37,7 @@
 		set hidden = 1
 
 	disposing()
-		observers -= src
+		LAZYLISTREMOVE(observers, src)
 		hivemind_owner?.hivemind -= src
 		..()
 

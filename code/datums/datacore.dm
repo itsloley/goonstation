@@ -127,7 +127,7 @@
 		S["notes"] = sec_note
 
 	if(H.traitHolder.hasTrait("jailbird"))
-		S["criminal"] = "*Arrest*"
+		S["criminal"] = ARREST_STATE_ARREST
 		S["mi_crim"] = pick(\
 								"Public urination.",\
 								"Reading highly confidential private information.",\
@@ -197,6 +197,7 @@
 								"Refusing to share their meth.",\
 								"Grand larceny.")
 		S["ma_crim_d"] = "No details provided."
+		H.update_arrest_icon()
 
 
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
@@ -214,10 +215,11 @@
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
 		if (H.mind?.assigned_role == "Clown")
-			S["criminal"] = "Clown"
+			S["criminal"] = ARREST_STATE_CLOWN
 			S["mi_crim"] = "Clown"
+			H.update_arrest_icon()
 		else
-			S["criminal"] = "None"
+			S["criminal"] = ARREST_STATE_NONE
 			S["mi_crim"] = "None"
 
 		S["mi_crim_d"] = "No minor crime convictions."
@@ -237,21 +239,21 @@
 	if(H.traitHolder.hasTrait("unionized"))
 		wageMult = 1.5
 
-	if(wagesystem.jobs[H.job])
-		B["wage"] = round(wagesystem.jobs[H.job] * wageMult)
-	// Otherwise give them a default wage
+	var/datum/job/J
+	if (H.job != null && istext(H.job))
+		J = find_job_in_controller_by_string(H.job)
 	else
-		var/datum/job/J = find_job_in_controller_by_string(G["rank"])
-		if (J?.wages)
-			B["wage"] = round(J.wages * wageMult)
-		else
-			B["wage"] = 0
+		J = find_job_in_controller_by_string(H.mind.assigned_role)
+	if (J?.wages)
+		B["wage"] = round(J.wages * wageMult)
+	else
+		B["wage"] = 0
 
 	src.general.add_record(G)
 	src.medical.add_record(M)
 	src.security.add_record(S)
 	src.bank.add_record(B)
-	wagesystem.payroll_stipend += B["wage"]
+	wagesystem.payroll_stipend += B["wage"] * 1.1
 
 	//Add email group
 	if ("[H.mind.assigned_role]" in job_mailgroup_list)

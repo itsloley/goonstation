@@ -75,7 +75,7 @@
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
-				M.changeStatus("paralysis", 8 SECONDS)
+				M.changeStatus("unconscious", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
@@ -217,7 +217,7 @@
 
 	var/body = "<ol><center>ADMIN PM</center><br><br>"
 
-	var/admin_pm = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	var/admin_pm = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 	var/pm_in_browser = "<center>Click on my name to respond.</center><br><br>"
 
@@ -1063,7 +1063,7 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
+		src.preview_icon = new /icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone
@@ -1232,7 +1232,7 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	target = trim(lowertext(target))
+	target = trimtext(lowertext(target))
 	if (!target) return 0
 
 	var/list/msg = list()
@@ -1370,6 +1370,7 @@
 	var/pct = display_max ? (reagents.total_volume / display_max) : 1
 	var/datum/color/color = reagents.get_average_color()
 	var/log_reagents = ""
+	var/base_url = "?src=\ref[src.holder];target=\ref[target];origin=reagent_report;action="
 
 	var/report_reagents = ""
 
@@ -1387,21 +1388,21 @@
 		<tr>
 			<td>[current_reagent.name]</td>
 			<td>[current_reagent.id]</td>
-			<td align='right'>[current_reagent.volume]</td>
+			<td align='right'>[current_reagent.volume] <a href="[base_url]removereagent;skip_pick=[current_reagent.id]">\[-\]</a></td>
 		</tr>
 		"}
 
 
-	var/refresh_url = "?src=\ref[src.holder];action=checkreagent_refresh;target=\ref[target];origin=reagent_report"
 	var/final_report = {"
 	<style type='text/css'>
 		* {
 			box-sizing: border-box;
 		}
+		#cmd { float: right; text-align: right; }
 		.reagents {
 			position: relative;
 			width: 100%;
-			padding: 2px;
+			padding: 1px 0 0 0;
 			border: 1px solid white;
 			background: black;
 			height: 2em;
@@ -1444,11 +1445,17 @@
 			}
 
 	</style>
-	Reagent Report for <b>[target]</b> <a style="display:block;float:right;" href="[refresh_url]">Refresh</a>
+	<div id="cmd">
+		<a href="[base_url]checkreagent_refresh">Refresh</a><br>
+		<a href="[base_url]checkreagent_add">Add Reagent</a><br>
+		<a href="[base_url]removereagent">Remove Reagents</a><br>
+		<a href="[base_url]checkreagent_flush">Flush All</a>
+	</div>Reagent Report for <b>[target]</b>
 	<hr>
-	<br>Temperature: [reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)
+	Temperature: [reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)
 	<br>Volume: [reagents.total_volume] / [reagents.maximum_volume]
-	<br><div class='reagents' id='reagents2'>[bar]</div><div class='reagents' style='height: 0.75em;'><div style='color: [color.to_rgb()]; width: [pct * 100]%;'></div></div>
+	<hr style="clear: both;">
+	<div class='reagents' id='reagents2'>[bar]</div><div class='reagents' style='height: 0.75em;'><div style='color: [color.to_rgb()]; width: [pct * 100]%;'></div></div>
 	<br>Colour: <div style='display: inline-block; width: 1em; border: 1px solid black; background: [color.to_rgb()]; position: relative; height: 1em;'></div> [color.to_rgba()] ([color.r] [color.g] [color.b], [color.a])
 	<table border="0" style="width:100%">
 	<tbody>
@@ -1518,22 +1525,6 @@
 	if(holder)
 		src.holder.playeropt(M)
 
-/obj/proc/addpathogens()
-	USR_ADMIN_ONLY
-	var/obj/A = src
-	if(!A.reagents) A.create_reagents(100)
-	var/amount = input(usr,"Amount:","Amount",50) as num
-	if(!amount) return
-
-	A.reagents.add_reagent("pathogen", amount)
-	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = new /datum/pathogen
-	P.setup(1)
-	R.pathogens += P.pathogen_uid
-	R.pathogens[P.pathogen_uid] = P
-
-	boutput(usr, SPAN_SUCCESS("Added [amount] units of pathogen to [A.name] with pathogen [P.name]."))
-
 /client/proc/addreagents(var/atom/A in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Add Reagent"
@@ -1573,7 +1564,7 @@
 	if(!amount)
 		return
 	var/overflow = amount - (reagents.maximum_volume - reagents.total_volume)
-	if (overflow > 0) // amount exceeds reagent space
+	if (overflow > 0.0001) // amount exceeds reagent space by more than micro-amounts
 		if (tgui_alert(usr, "That amount of reagents exceeds the available space by [overflow] units. Increase the reagent cap of [A] to fit?",
 			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
 			reagents.maximum_volume += overflow
@@ -1597,6 +1588,18 @@
 		var/obj/fluid/fluid = A
 		fluid.group?.update_loop()
 
+
+/client/proc/flushreagents(var/atom/A in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Flush Reagents"
+	set popup_menu = 0
+
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/datum/reagents/reagents = A.reagents
+	if (reagents)
+		reagents.remove_any(INFINITY)
 
 /client/proc/cmd_set_material(var/atom/A in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2484,7 +2487,7 @@ var/global/night_mode_enabled = 0
 
 /client/proc/admin_toggle_lighting() //shameless copied from the ghost one
 	set name = "Toggle Lighting"
-	set desc = "Turns the scary darkness off"
+	set desc = "Toggle lighting on or off for yourself only."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
@@ -2547,9 +2550,6 @@ var/global/night_mode_enabled = 0
 
 	ADMIN_ONLY
 
-	if (!config || !config.medal_hub || !config.medal_password)
-		return
-
 	if (!medal)
 		medal = input("Enter medal name", "Medal name", "Banned") as null|text
 		if (!medal)
@@ -2577,23 +2577,21 @@ var/global/night_mode_enabled = 0
 
 	ADMIN_ONLY
 
-	if (!config || !config.medal_hub || !config.medal_password)
-		return
 	if (!old_key)
-		old_key = input("Enter old account key", "Old account key", null) as null|text
+		old_key = input("Enter old account ckey", "Old account ckey", null) as null|text
 	if (!new_key)
-		new_key = input("Enter new account key", "New account key", null) as null|text
-	var/datum/player/old_player = make_player(old_key)
-	var/datum/player/new_player = make_player(new_key)
-	var/list/medals = old_player.get_all_medals()
-	if (isnull(medals))
-		boutput(src, "No medals; error communicating with BYOND hub!")
-		return
-	for (var/medal in medals)
-		var/result = new_player.unlock_medal_sync(medal)
-		if (isnull(result))
-			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
-			break
+		new_key = input("Enter new account ckey", "New account ckey", null) as null|text
+
+	try
+		var/datum/apiRoute/players/medals/transfer/transferMedals = new
+		transferMedals.buildBody(old_key, new_key)
+		apiHandler.queryAPI(transferMedals)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		boutput(src, "Error communicating with the place where medals live: [error.message]")
+		return FALSE
+
+	boutput(src, "Successfully copied medals!")
 
 /client/proc/copy_cloud_saves(old_key as null|text)
 	set name  = "Copy Cloud Data"
@@ -2788,7 +2786,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					if (W.z != 1) continue
 					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
-					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
+					new /obj/machinery/crusher/wall(locate(W.x, W.y, W.z))
 					W.set_density(0)
 
 				logTheThing(LOG_ADMIN, src, "has turned every wall into a crusher! God damn.")
@@ -3114,6 +3112,45 @@ var/global/force_radio_maptext = FALSE
 					message_admins("[spawn_fails] artifact\s failed to spawn")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+
+/// Spawn custom reagent that can transform turfs and objs to whatever material you desire.
+/client/proc/spawn_custom_transmutation()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Spawn Custom Transmutation Reagent"
+	ADMIN_ONLY
+	var/containers = list("Small Beaker" = /obj/item/reagent_containers/glass/beaker,
+	"Large Beaker" = /obj/item/reagent_containers/glass/beaker/large,
+	"Grenade" = /obj/item/chem_grenade/custom)
+
+
+	var/matId = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
+	if (!matId)
+		return
+
+	var/material_selected = getMaterial(matId)
+	if(!material_selected)
+		alert(src, "Invalid material selected: [matId]", "Invalid Material", "Ok")
+		return
+
+	var/containerId = tgui_input_list(src, "Select container for custom reagent:", "Select container", containers)
+	if (!containerId)
+		alert(src, "Invalid container selected: [containerId]", "Invalid Container", "Ok")
+
+	var/containerType = containers[containerId]
+
+	var/obj/item/container = new containerType()
+	if (containerId == "Grenade")
+		var/obj/item/chem_grenade/custom/grenade = container
+		var/obj/item/reagent_containers/glass/beaker/grenadeBeaker = new()
+		grenadeBeaker.reagents.add_reagent("custom_transmutation", 50, sdata=matId)
+		grenade.beakers += grenadeBeaker
+		grenade.stage = 2
+		grenade.icon_state = "grenade-chem3"
+	else
+
+		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
+		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
+	usr.put_in_hand_or_drop(container)
 
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT

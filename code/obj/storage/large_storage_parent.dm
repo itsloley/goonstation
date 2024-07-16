@@ -13,7 +13,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
-	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
+	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
@@ -47,6 +47,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	var/emagged = 0
 	var/jiggled = 0
 	var/legholes = 0
+	var/can_leghole = TRUE
 	var/flip_health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
@@ -65,8 +66,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	var/grab_stuff_on_spawn = TRUE
 
-	///Items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
-	var/list/vis_items = list()
+	///Controls items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
+	var/datum/vis_storage_controller/vis_controller
 
 	New()
 		..()
@@ -91,13 +92,15 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
+		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (!ispath(thing))
-				continue
 			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
 				amt = abs(spawn_contents[thing])
-			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
+			do
+				var/atom/A = new thing(src)
+				A.layer += 0.00001 * i
+				i++
 			while (--amt > 0)
 
 	proc/get_welding_positions()
@@ -302,7 +305,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 							return
 						src._health = src._max_health
 						src.visible_message(SPAN_ALERT("[user] repairs [src] with [I]."))
-					else if (!src.is_short && !src.legholes)
+					else if (!src.is_short && !src.legholes && src.can_leghole)
 						if (!weldingtool.try_weld(user, 1))
 							return
 						src.legholes = 1
@@ -454,7 +457,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
 		if (!src.is_acceptable_content(O))
@@ -477,8 +480,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					SPAN_ALERT("You trip over [src]!"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 					user.set_loc(T)
-					if (!user.hasStatus("weakened"))
-						user.changeStatus("weakened", 10 SECONDS)
+					if (!user.hasStatus("knockdown"))
+						user.changeStatus("knockdown", 10 SECONDS)
 					JOB_XP(user, "Clown", 3)
 					return
 				else
@@ -612,9 +615,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
-		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
+		if (istype(A, /obj/fakeobject/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage) || istype(A, /obj/tug_cart)))
 			return 0
 
 	var/obj/storage/entangled
@@ -675,8 +678,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
 				O.set_loc(src)
-		for (var/obj/O in vis_items)
-			vis_contents -= O
+		vis_controller?.hide()
 
 		for (var/mob/M in get_turf(src))
 			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
@@ -762,10 +764,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			spawn_contents = null
 
 		var/newloc = get_turf(src)
+		vis_controller?.show()
 		for (var/obj/O in src)
-			if (O in vis_items)
-				src.vis_contents += O
-			else
+			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
@@ -830,7 +831,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
 				bleed(M, 500, 5)
 				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				var/mob/living/carbon/cube/meatcube = M.make_cube(null, rand(10,15), get_turf(src))
 				if (src.crunches_deliciously)
 					meatcube.name = "hotdog"
 					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
@@ -973,7 +974,7 @@ TYPEINFO_NEW(/obj/storage/secure)
 		if (isnum(src.radio_control))
 			radio_control = clamp(round(radio_control), 1000, 1500)
 			src.net_id = generate_net_id(src)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, radio_control)
 
 	update_icon()
 		..()

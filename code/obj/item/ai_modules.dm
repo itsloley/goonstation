@@ -18,7 +18,7 @@ TYPEINFO(/obj/item/aiModule)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 5
 	w_class = W_CLASS_SMALL
 	throwforce = 5
@@ -116,17 +116,14 @@ TYPEINFO(/obj/item/aiModule)
 /******************** Modules ********************/
 /******************** Asimov ************************/
 /obj/item/aiModule/asimov1
-	highlight_color = rgb(0, 167, 0, 255)
 	name = "AI Law Module - 'Asimov's 1st Law of Robotics'"
 	lawText = "You may not injure a human being or cause one to come to harm."
 
 /obj/item/aiModule/asimov2
-	highlight_color = rgb(0, 138, 0, 255)
 	name = "AI Law Module - 'Asimov's 2nd Law of Robotics'"
 	lawText = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
 
 /obj/item/aiModule/asimov3
-	highlight_color = rgb(0, 119, 0, 255)
 	name = "AI Law Module - 'Asimov's 3rd Law of Robotics'"
 	lawText = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
 /******************** RoboCop ********************/
@@ -350,7 +347,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 /obj/item/aiModule/freeform/disguised
 	name = "AI Law Module - 'Disguised'"
-	highlight_color = rgb(0, 138, 0, 255)
+	highlight_color = rgb(0, 167, 1, 255)
 	is_syndicate = TRUE
 
 /******************** Random ********************/

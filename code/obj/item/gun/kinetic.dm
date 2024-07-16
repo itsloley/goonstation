@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
 	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/ammo_cats = null
+	var/ammo_cats = list()
 	/// Does this gun have a special icon state for having no ammo lefT?
 	var/has_empty_state = FALSE
 	/// Does this gun have a special icon state it should flick to when fired?
@@ -378,7 +378,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
-	var/forensic_ID = null
 	burn_possible = FALSE
 
 	small
@@ -693,7 +692,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	recoil_strength = 12
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD
 
 	w_class = W_CLASS_BULKY
@@ -728,7 +727,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
@@ -749,7 +748,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "ohr"
 	wear_state = "ohr" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -778,7 +777,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "tranq"
 	item_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
@@ -790,7 +789,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
 	fire_animation = TRUE
-	recoil_strength = 10
+	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -1057,7 +1056,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm/draco
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	w_class = W_CLASS_BULKY
 	recoil_strength = 7
 	recoil_stacking_enabled = TRUE
@@ -1280,6 +1279,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_9MM)
 	fire_animation = TRUE
 	max_ammo_capacity = 10
 	auto_eject = TRUE
@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
 		var/mob/living/H = target
-		H.changeStatus("weakened", 3 SECONDS)
+		H.changeStatus("knockdown", 3 SECONDS)
 		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
@@ -1315,11 +1315,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
 	force = MELEE_DMG_SMG
-	ammo_cats = list(AMMO_SMG_9MM)
+	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
 	auto_eject = 0
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	object_flags = NO_ARM_ATTACH
 	c_flags = ONBELT
 
@@ -1446,7 +1446,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
 	add_residue = FALSE
-	recoil_strength = 4
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1499,7 +1499,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	inventory_counter_enabled = FALSE
 	allowReverseReload = FALSE
 	var/power_requirement = 100 //! The amount of power deducted from a borg's cell when they fire this.
-	recoil_strength = 4
 
 	New()
 		. = ..()
@@ -1547,7 +1546,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 6
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1572,7 +1571,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 7
+	recoil_strength = 3
 
 	New()
 		ammo = new default_magazine
@@ -1762,30 +1761,131 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			ammo = new/obj/item/ammo/bullets/a12/weak
 			set_current_projectile(new/datum/projectile/bullet/a12/weak)
 
-/obj/item/gun/kinetic/riotgun
+
+/obj/item/gun/kinetic/pumpweapon
+	/// Whether this shotgun needs an action to pump in each direction
+	var/is_heavy = FALSE
+	/// Whether this shotgun's action is open (pump is pulled backwards)
+	var/pump_back = FALSE
+	/// Whether this shotgun is ready to fire (if the slide is not racked)
+	var/hammer_ready = FALSE
+	var/base_icon_state = ""
+	/// The path to the sound played when the shotgun is pumped, or if is_heavy, pulled back
+	var/pumpsound = 'sound/weapons/shotgunpump.ogg'
+	/// The path to the sound played when the shotgun is pushed forwards, if is_heavy
+	var/pushsound = FALSE
+	/// The delay between racking this gun
+	var/rack_delay = 0
+
+
+	New()
+		if (!is_heavy)
+			pump_back = TRUE
+			hammer_ready = TRUE
+		..()
+
+	canshoot(mob/user)
+		return(..() && hammer_ready && !src.pump_back)
+
+	attack_self(mob/user as mob)
+		..()
+		src.rack(user)
+
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if(ammo.amount_left > 0 && (pump_back || !hammer_ready))
+			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+		..()
+		src.hammer_ready = FALSE
+		if (!is_heavy)
+			src.pump_back = TRUE //lighter guns get this half-done for you
+		else
+			ON_COOLDOWN(src,"rack_delay",rack_delay)
+		src.UpdateIcon()
+
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if(ammo.amount_left > 0 && (pump_back || !hammer_ready))
+			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+			return
+		..()
+		src.hammer_ready = FALSE
+		if (!is_heavy)
+			src.pump_back = TRUE //lighter guns get this half-done for you
+		else
+			ON_COOLDOWN(src,"rack_delay",rack_delay)
+		src.UpdateIcon()
+
+
+	update_icon()
+		. = ..()
+		src.icon_state = base_icon_state + (gilded ? "-golden" : "") + ((!pump_back || !has_empty_state) ? "" : "-empty" )
+
+
+
+	proc/rack(var/atom/movable/user)
+		var/mob/mob_user = null
+		if(ismob(user))
+			mob_user = user
+		if (ON_COOLDOWN(src,"rack_delay",rack_delay))
+			return
+		if (!src.hammer_ready || src.pump_back) //Are we racked?
+			if (src.ammo.amount_left == 0)
+				if (!pump_back)
+					playsound(user.loc, pumpsound, 50, 1)
+					ejectcasings()
+				src.pump_back = TRUE
+				src.hammer_ready = TRUE
+				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
+				UpdateIcon()
+			else
+				if (is_heavy)
+					if (pump_back)
+						src.pump_back = FALSE
+						src.hammer_ready = TRUE
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden" : ""]" // having UpdateIcon() here breaks
+						playsound(user.loc, pushsound, 50, 1)
+					else
+						ejectcasings()
+						src.pump_back = TRUE
+						src.hammer_ready = TRUE
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
+						playsound(user.loc, pumpsound, 50, 1)
+				else
+					src.hammer_ready = TRUE
+					src.pump_back = FALSE
+					playsound(user.loc, pumpsound, 50, 1)
+
+					ejectcasings()
+					if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
+						animate(icon_state = base_icon_state+"[gilded ? "-golden" : ""]")
+					else
+						UpdateIcon() // Slide already open? Just close the slide
+				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
+
+/obj/item/gun/kinetic/pumpweapon/riotgun
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
 	wear_state = "shotty" // prevent empty state from breaking the worn image
+	base_icon_state = "shotty"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
-	auto_eject = 0
-	can_dual_wield = 0
-	two_handed = 1
-	has_empty_state = 1
-	gildable = 1
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/abg
-	var/racked_slide = FALSE
 	recoil_strength = 14
 	recoil_max = 60
-
 
 
 	New()
@@ -1793,57 +1893,44 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
 
-	update_icon()
-		. = ..()
-		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+/obj/item/gun/kinetic/pumpweapon/ks23
+	name = "Kuvalda Carbine"
+	desc = "A *huge* 4-gauge shotgun built with a repurposed 23mm cannon barrel. It's unlikely there's any moral justification for using this against humans."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "ks23"
+	item_state = "ks23"
+	wear_state = "ks23" // prevent empty state from breaking the worn image
+	base_icon_state = "ks23"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags = TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
+	force = MELEE_DMG_RIFLE
+	contraband = 6
+	is_heavy = TRUE
+	ammo_cats = list(AMMO_KUVALDA)
+	max_ammo_capacity = 4
+	reload_cooldown = 12 DECI SECONDS
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	gildable = TRUE
+	recoil_reset = 15 DECI SECONDS
+	default_magazine = /obj/item/ammo/bullets/kuvalda
+	recoil_strength = 18
+	recoil_max = 40
+	max_move_amount = 1
+	rack_delay = 6
+	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
+	pushsound = 'sound/weapons/kuvalda_push2.ogg'
+	empty
+		default_magazine = /obj/item/ammo/bullets/kuvalda/empty
 
-	canshoot(mob/user)
-		return(..() && src.racked_slide)
-
-	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel)
 		..()
-		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
-		src.UpdateIcon()
 
-	shoot_point_blank(atom/target, mob/user, second_shot)
-		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
-			return
-		..()
-		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
-		src.UpdateIcon()
-
-	attack_self(mob/user as mob)
-		..()
-		src.rack(user)
-
-	proc/rack(var/atom/movable/user)
-		var/mob/mob_user = null
-		if(ismob(user))
-			mob_user = user
-		if (!src.racked_slide) //Are we racked?
-			if (src.ammo.amount_left == 0)
-				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-				UpdateIcon()
-			else
-				src.racked_slide = TRUE
-				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
-					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
-					animate(src, time = 0.2 SECONDS)
-					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
-				else
-					UpdateIcon() // Slide already open? Just close the slide
-				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
-				playsound(user.loc, 'sound/weapons/shotgunpump.ogg', 50, 1)
-				src.casings_to_eject = 0
-				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
-					var/turf/T = get_turf(src)
-					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-						new src.current_projectile.casing(T, src.forensic_ID)
 
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
@@ -1852,7 +1939,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "mts255"
 	item_state = "mts255"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
@@ -1881,7 +1968,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "striker12"
 	item_state = "striker"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 7
@@ -1973,7 +2060,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = W_CLASS_BULKY
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 	recoil_strength = 14
@@ -2032,10 +2119,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	mouse_drop(atom/over_object, src_location, over_location, params)
-		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
+		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			attack_hand(usr)
+			src.Attackhand(usr)
 			return
 
 	attackby(obj/item/b, mob/user)
@@ -2057,6 +2144,213 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else
 			boutput(user, SPAN_ALERT("You can't fire \the [src] when it is open!"))
 
+#define ONE_BARREL 1
+#define TWO_BARRELS 2
+#define ALL_BARRELS 4
+#define MAX_USES 9
+
+/obj/item/gun/kinetic/sawnoff/quadbarrel //for salvagers
+
+	name = "\improper Four Letter Word"
+	desc = "For when you REALLY need to get the point across."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "quadb"
+	item_state = "quadbarrel" //custom inhands, though.
+	default_magazine = /obj/item/ammo/bullets/a12/bird/four
+
+	camera_recoil_sway_min = 10 //VIOLENCE!
+	recoil_strength = 15
+	recoil_max = 60
+
+	var/guaranteed_uses = MAX_USES	// allows for just over two volleys before it starts breaking
+	var/firemode = ONE_BARREL
+	var/priorammo
+
+	force = MELEE_DMG_RIFLE
+	max_ammo_capacity = 4
+	two_handed = TRUE
+
+	New()
+		..()
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/bird12)
+		name = initial(name) //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
+		UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		.+= "You can use a <b>welding tool</b> to repair its state. \n You can also use a <b>screwdriver</b> to cycle firing modes."
+
+	examine()
+		. = ..()
+		. += "\n \n It is set to fire " //differentiate the FLW examine text from the default gun examine text
+		switch(firemode)
+			if(ONE_BARREL)
+				. += "one barrel."
+			if(TWO_BARRELS)
+				. += "two barrels."
+			if(ALL_BARRELS)
+				. += "all four barrels!"
+		if (guaranteed_uses == MAX_USES)
+			. += "It's in perfect condition!"
+		else if (guaranteed_uses <= 0) //negative damage
+			. += " It seems severely damaged!"
+		else if (guaranteed_uses < 4) //0-4
+			. += " It seems pretty damaged."
+		else if(guaranteed_uses < 7) //4-7
+			. += " It's damaged."
+		else  //7+
+			. += " It's barely damaged."
+
+
+	update_icon()
+		. = ..()
+		src.icon_state = "quadb" + (!src.broke_open ? "" : "-empty" )
+
+	shoot(var/target, var/start, var/mob/user)
+
+		priorammo = src.ammo.amount_left
+
+		//Go up to the limit defined by the firing mode, but don't exceed however many bullets are in the gun BEFORE we started firing
+		for(var/i=1, ((i <= priorammo) && (i <= firemode)), i++)
+			..() //shoot an additional ith time (just goes once if it's in single shot)
+			guaranteed_uses-- //damage the gun an additional ith time
+
+		//check the gun's condition, break as needed
+		if((priorammo > 0) && !(src.broke_open)) //make sure the gun isn't empty and also closed (shooting conditions) before we roll to break
+			//you're shooting multiple shotgun shells out of a garbage gun at the same time. don't think there won't be consequences
+			if((firemode != ONE_BARREL) && (priorammo == 2)) // two shells are shot, can be in 2 or 4 mode
+				boutput(user, SPAN_ALERT("The [src] jumps in your hands!"))
+				user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 5, remove_stamina_below_zero = 0)
+			else if((firemode == ALL_BARRELS) && (priorammo >= 3)) //3 or more shells, can only be in all barrel mode
+				SPAWN(0.3 DECI SECONDS) //give it a micro-delay
+				if (src.canshoot(user))
+					boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
+					//this might seem punishing but keep in mind it's FOUR whole shotgun shells at once.
+					user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+
+			if(guaranteed_uses < 0)
+				//warn the user that they're in the danger zone
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				user.visible_message(SPAN_COMBAT("The [src] [pick(list("rattles!", "bulges!", "pops!", "thunks!", "jolts!", "makes a concerning click...", "cracks!"))]"))
+				if (prob(guaranteed_uses*-5)) //roll for failure. Since [uses] is now negative, we need another minus sign to cancel out
+
+					user.visible_message(SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"), SPAN_ALERT("The [src] gives out!"))
+
+					if((firemode == ALL_BARRELS) && (priorammo == 4)) //ohhh, you REALLY fucked up now.
+						explosion(src, get_turf(src), 0, 0.5, 1.5, 4)
+
+					//replace the gun with broken version
+					var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
+					user.drop_item(src)
+					user.put_in_hand_or_drop(broken)
+					qdel(src)
+
+	proc/repairdamage(obj/item/gun/kinetic/sawnoff/quadbarrel/Q, mob/user)
+		if(guaranteed_uses < MAX_USES)
+			Q.guaranteed_uses ++
+
+		if(guaranteed_uses == MAX_USES)
+			boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
+			actions.interrupt(user, INTERRUPT_ACT) //break the loop
+		else if(guaranteed_uses <= 0) //negative
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still severely damaged..."))
+		else if(guaranteed_uses < 5) //0-4
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still pretty damaged..."))
+		else //5+
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's starting to look better..."))
+
+	proc/get_welding_positions()
+
+		var/startpos = list(rand(7, 16), rand(4, -4))
+		var/stoppos = list(rand(7, 16), rand(4, -4))
+		return list(startpos, stoppos)
+
+	attackby(obj/item/I, mob/user)
+
+		//are we repairing?
+		if (isweldingtool(I))
+			var/obj/item/weldingtool/welder = I
+			if(guaranteed_uses == MAX_USES)
+				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
+			else //We are good to repair!
+				var/datum/action/bar/icon/callback/action_bar
+				boutput(user, SPAN_NOTICE("You start to repair the [src]..."))
+
+				//create the action bar
+				var/positions = src.get_welding_positions()
+				action_bar = new /datum/action/bar/private/welding/loop(user, src, 1.5 SECONDS, \
+				proc_path = /obj/item/gun/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
+				proc_args=list(src, user), \
+				start = positions[1], \
+				stop = positions[2], \
+				tool = welder, \
+				cost = 2)
+
+				//begin repairing!
+				actions.start(action_bar, user)
+		//are we cycling through firing modes?
+		else if(isscrewingtool(I))
+			if(firemode == ONE_BARREL)
+				firemode = TWO_BARRELS
+				boutput(user, SPAN_NOTICE("You set [src] to fire two barrels at a time."))
+			else if(firemode == TWO_BARRELS)
+				firemode = ALL_BARRELS
+				boutput(user, SPAN_NOTICE("You set [src] to fire all four barrels! You're not so sure about this..."))
+			else
+				firemode = ONE_BARREL
+				boutput(user, SPAN_NOTICE("You set [src] to fire one barrel at a time."))
+		else //no special interactions, so default to whatever
+			..()
+
+/obj/item/brokenquadbarrel
+	two_handed = TRUE
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "quadb-broken"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi' //gotta make it use gun inhands
+	item_state = "quadbarrel"
+	name = "Broken Four Letter Word"
+	desc = "This thing is TOTALED well beyond repair. You feel like you can recover a slamgun from it, though."
+	force = MELEE_DMG_RIFLE
+
+	attack_self(mob/user as mob)
+
+		user.drop_item(src) //clear hands
+		boutput(user, SPAN_NOTICE("You rip apart the the [src]!"))
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
+
+		// give an OPEN slamgun
+		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
+		user.put_in_hand_or_drop(newgun)
+		newgun.AttackSelf(user)
+
+		//give some other random junk that'd reasonably be pulled off, for flavor
+		var/turf/T = get_turf(src)
+
+		var/obj/item/raw_material/scrap_metal/W = new /obj/item/raw_material/scrap_metal
+		W.setMaterial(getMaterial("wood"))
+		W.name = "mangled chunk of wood"
+		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
+		W.icon = 'icons/obj/materials.dmi'
+		W.icon_state = "scrap4"
+
+		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
+		G.icon_state = "gib1"
+
+		var/obj/item/rods/steel/R = new /obj/item/rods/steel
+		var/obj/item/scrap/S1 = new /obj/item/scrap
+		S1.icon_state = "2metal0"
+
+		var/flavordebris = list(W, G, R, S1)
+		var/obj/item/currentitem
+		var/i
+		for(i=1, i<=4, i++)
+			currentitem = flavordebris[i]
+			currentitem.set_loc(T)
+			currentitem.pixel_x = rand(-8,8)
+			currentitem.pixel_y = rand(-8,8)
+
+		qdel(src)
+
 //0.75
 /obj/item/gun/kinetic/single_action/flintlock/rifle
 	name = "flintlock rifle"
@@ -2065,7 +2359,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "flintlock_rifle"
 	item_state = "flintlock_rifle"
 	ammo_cats = list(AMMO_FLINTLOCK_RIFLE)
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	two_handed = TRUE
@@ -2093,6 +2387,40 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
+
+/obj/item/gun/kinetic/four_bore_albatross
+	name = "\improper Albatross four-bore rifle"
+	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Intended for suppression or elimination of monstrous targets."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "four_bore"
+	item_state = "four_bore"
+	w_class = W_CLASS_BULKY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	slowdown = 10
+	slowdown_time = 8
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	contraband = 7
+	ammo_cats = list(AMMO_FOUR_BORE)
+	spread_angle = 2
+	shoot_delay = 0.8 SECONDS
+	max_ammo_capacity = 2
+	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
+	fire_animation = FALSE
+	recoil_strength = 20
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/four_bore_stunners)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 512, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		..()
+
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 0.6)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm
@@ -2355,7 +2683,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
@@ -2443,7 +2771,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	spread_angle = 0
 	can_dual_wield = 0
 	slowdown = 0
@@ -2639,7 +2967,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -2706,7 +3034,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "m16"
 	item_state = "m16"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -2778,12 +3106,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = 0
 	shoot_delay = 7
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	spread_angle = 6
 	can_dual_wield = 0
 
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
@@ -2833,7 +3162,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 20
 	recoil_max = 25 //seriously how are you going to fire this more than once
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
@@ -2841,6 +3170,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
+	contraband = 8
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -2875,7 +3205,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
@@ -2915,7 +3245,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 7
@@ -2976,12 +3306,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_RIFLE_308)
 	max_ammo_capacity = 6
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	slowdown = 7
 	slowdown_time = 5
 
 	can_dual_wield = 0
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 
@@ -3019,7 +3350,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 5
 	auto_eject = 1
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0

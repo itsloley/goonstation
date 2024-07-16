@@ -4,7 +4,7 @@
 	name = "ammo"
 	var/sname = "Generic Ammo"
 	icon = 'icons/obj/items/ammo.dmi'
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "syringe_kit"
 	m_amt = 40000
 	g_amt = 0
@@ -37,6 +37,7 @@
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
+	// 1.05  - 4 gauge
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
@@ -135,17 +136,18 @@
 		// We can't delete A here, because there's going to be ammo left over.
 		if (K.max_ammo_capacity < A.amount_left)
 			// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
-			var/obj/item/ammo/bullets/ammoDrop = new K.ammo.type
-			ammoDrop.amount_left = K.ammo.amount_left
-			ammoDrop.name = K.ammo.name
-			ammoDrop.icon = K.ammo.icon
-			ammoDrop.icon_state = K.ammo.icon_state
-			ammoDrop.ammo_type = K.ammo.ammo_type
-			ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
-			ammoDrop.UpdateIcon()
-			usr.put_in_hand_or_drop(ammoDrop)
-			ammoDrop.after_unload(usr)
-			K.ammo.amount_left = 0 // Make room for the new ammo.
+			for(var/i in 1 to ceil(K.ammo.amount_left / K.ammo.max_amount))
+				var/obj/item/ammo/bullets/ammoDrop = new K.ammo.type
+				ammoDrop.amount_left = min(K.ammo.amount_left, K.ammo.max_amount)
+				ammoDrop.name = K.ammo.name
+				ammoDrop.icon = K.ammo.icon
+				ammoDrop.icon_state = K.ammo.icon_state
+				ammoDrop.ammo_type = K.ammo.ammo_type
+				ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
+				ammoDrop.UpdateIcon()
+				usr.put_in_hand_or_drop(ammoDrop)
+				ammoDrop.after_unload(usr)
+				K.ammo.amount_left = max(K.ammo.amount_left - K.ammo.max_amount, 0) // Make room for the new ammo.
 			K.ammo.loadammo(A, K) // Let the other proc do the work for us.
 			//DEBUG_MESSAGE("Swapped [K]'s ammo with [A.type]. There are [A.amount_left] round left over.")
 			return 2
@@ -155,16 +157,18 @@
 			usr.u_equip(A) // We need a free hand for ammoHand first.
 
 			// Some ammo boxes have dynamic icon/desc updates we can't get otherwise.
-			var/obj/item/ammo/bullets/ammoHand = new K.ammo.type
-			ammoHand.amount_left = K.ammo.amount_left
-			ammoHand.name = K.ammo.name
-			ammoHand.icon = K.ammo.icon
-			ammoHand.icon_state = K.ammo.icon_state
-			ammoHand.ammo_type = K.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
-			ammoHand.UpdateIcon()
-			usr.put_in_hand_or_drop(ammoHand)
-			ammoHand.after_unload(usr)
+			for(var/i in 1 to ceil(K.ammo.amount_left / K.ammo.max_amount))
+				var/obj/item/ammo/bullets/ammoHand = new K.ammo.type
+				ammoHand.amount_left = min(K.ammo.amount_left, K.ammo.max_amount)
+				ammoHand.name = K.ammo.name
+				ammoHand.icon = K.ammo.icon
+				ammoHand.icon_state = K.ammo.icon_state
+				ammoHand.ammo_type = K.ammo.ammo_type
+				ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
+				ammoHand.UpdateIcon()
+				usr.put_in_hand_or_drop(ammoHand)
+				ammoHand.after_unload(usr)
+				K.ammo.amount_left = max(K.ammo.amount_left - K.ammo.max_amount, 0)
 
 			var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
 			ammoGun.amount_left = A.amount_left
@@ -805,6 +809,10 @@
 			amount_left = 2
 			max_amount = 2
 
+		four //for FLW
+			amount_left = 4
+			max_amount = 4
+
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
@@ -961,6 +969,74 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/rod
 	ammo_cat = AMMO_COILGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+
+//1.05
+/obj/item/ammo/bullets/kuvalda
+	sname = "Shrapnel-10"
+	name = "Shrapnel-10"
+	desc = "A handful of oversized buckshot shells, for a VERY big gun. If you <b>MUST</b> have your opponents splattered into a 10 metre cone of viscera..."
+	ammo_type = new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	icon_state = "shrapnel"
+	icon_short = "shrapnel"
+	icon_empty = ""
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = TRUE
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/kuvaldaload.ogg'
+	empty
+		amount_left = 0
+
+
+/obj/item/ammo/bullets/kuvalda/slug
+	sname = "Barrikada Slug"
+	name = "Barrikada Slug"
+	desc = "A handful of oversized slug shotshells, for a VERY big gun. These are supposed to be used against vehicle engine blocks..."
+	ammo_type = new/datum/projectile/bullet/kuvalda_slug
+	icon_state = "barrikada"
+	icon_short = "barrikada"
+	icon_empty = ""
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = TRUE
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/kuvaldaload.ogg'
+/obj/item/ammo/bullets/four_bore
+	sname = "Four-Bore Termination Round"
+	name = "four-bore termination rounds"
+	desc = "A box of inch wide lethal rounds. These are for monsters that shouldn't exist."
+	ammo_type = new/datum/projectile/bullet/four_bore
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4b-6"
+	icon_empty = "4b-0"
+	icon_dynamic = 1
+	icon_short = "4b"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/four_bore/stun
+	sname = "Four-Bore Roundhouse Slug"
+	name = "four-bore roundhouse slugs"
+	desc = "A box of massive rubber slugs. These are sublethal, not nonlethal."
+	ammo_type = new/datum/projectile/bullet/four_bore_stunners
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4bs-6"
+	icon_empty = "4bs-0"
+	icon_dynamic = 1
+	icon_short = "4bs"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	two //spawns in albatross
+		amount_left = 2
+		max_amount = 2
 
 //1.57
 /obj/item/ammo/bullets/autocannon

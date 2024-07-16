@@ -234,7 +234,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				var/openorclose = (src.valve_open) ? "closed" : "opened"
 				var/turf/bombturf = get_turf(src)
 				logTheThing(LOG_BOMBING, usr, "[openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
-				message_admins("[key_name(usr)] [openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+				if (src.tank_one && src.tank_two)
+					message_admins("[key_name(usr)] [openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if ("remove_device")
 				src.attached_device.set_loc(get_turf(src))
@@ -242,8 +243,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				src.attached_device = null
 				UpdateIcon()
 			if ("interact_device")
-				attached_device.attack_self(usr)
-		src.attack_self(usr)
+				attached_device.AttackSelf(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 
 	proc/remove_tank(var/T)
@@ -348,7 +349,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
-	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special variant.
 		src.wear_image.overlays = list()
 		if(src.tank_one)
 			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")
@@ -412,7 +413,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 					shake_camera(L,10,32)
 					boutput(L, SPAN_ALERT("You are sent flying!"))
 
-					L.changeStatus("weakened", stun_time SECONDS)
+					L.changeStatus("knockdown", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
@@ -627,6 +628,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
 	w_class = W_CLASS_SMALL
+	c_flags = ONBELT
 
 	var/obj/item/pressure_crystal/crystal
 

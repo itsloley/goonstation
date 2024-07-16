@@ -49,7 +49,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
@@ -111,7 +111,7 @@
 /obj/item/assembly/proximity_bomb/attack_self(mob/user as mob)
 
 	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
-	src.part1.attack_self(user, 1)
+	src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -184,7 +184,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/time_bomb/c_state(n)
 
@@ -243,7 +243,7 @@
 /obj/item/assembly/time_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		src.part1.attack_self(user, 1)
+		src.part1.AttackSelf(user, 1)
 		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
@@ -275,7 +275,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_bomb/examine()
 	. = ..()
@@ -332,7 +332,7 @@
 
 	if (src.part1)
 		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
-		src.part1.attack_self(user, 1)
+		src.part1.AttackSelf(user, 1)
 	src.add_fingerprint(user)
 	return
 

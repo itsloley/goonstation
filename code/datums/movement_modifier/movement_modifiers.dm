@@ -23,6 +23,9 @@
 
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
+/datum/movement_modifier/mechboots
+	pushpull_multiplier = 0
+
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
@@ -52,6 +55,9 @@
 
 /datum/movement_modifier/death_march
 	additive_slowdown = -0.4
+
+/datum/movement_modifier/gang_trapped
+	additive_slowdown = 2
 
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
@@ -284,11 +290,6 @@
 		// apply a negative modifier to balance out what movement_delay would set, times half times the number of arms
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
-
-// pathogen stuff
-
-/datum/movement_modifier/patho_oxygen
-	multiplicative_slowdown = 0.75
 
 // shivering
 

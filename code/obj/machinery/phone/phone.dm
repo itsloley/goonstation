@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/phone_icon = "phone"
 	var/ringing_icon = "phone_ringing"
 	var/last_called = null
+	var/caller_id_message = null
 	var/phone_category = null
 	var/phone_id = null
 	var/stripe_color = null
@@ -143,6 +144,47 @@ TYPEINFO(/obj/machinery/phone)
 			src.gib(src.loc)
 			qdel(src)
 
+	proc/draw_cord()
+		if(!src.handset)
+			return
+		var/handset_offset_x = -7
+		var/handset_offset_y = -7
+		var/atom/movable/target = src.handset
+		if(ismob(src.handset.loc))
+			var/mob/living/M = src.handset.loc
+			target = M
+			switch (M.dir)
+				if (NORTH)
+					handset_offset_y = -1
+					if (M.hand == LEFT_HAND)
+						handset_offset_x = -6
+					else
+						handset_offset_x = 6
+				if (SOUTH)
+					handset_offset_y = -1
+					if (M.hand == LEFT_HAND)
+						handset_offset_x = 6
+					else
+						handset_offset_x = -6
+				if (EAST)
+					if(M.hand == LEFT_HAND)
+						handset_offset_x = 4
+						handset_offset_y = -4
+					else
+						handset_offset_x = -4
+						handset_offset_y = -2
+				if(WEST)
+					if(M.hand == LEFT_HAND)
+						handset_offset_x = 4
+						handset_offset_y = -2
+					else
+						handset_offset_x = -4
+						handset_offset_y = -4
+						handset_offset_x = -4
+		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "phone_line_\ref[src]")
+
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user)
 		..(user)
@@ -154,7 +196,9 @@ TYPEINFO(/obj/machinery/phone)
 			return
 
 		src.handset = new /obj/item/phone_handset(src,user)
+		RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
 		user.put_in_hand_or_drop(src.handset)
+		src.draw_cord()
 		src.answered = TRUE
 
 		src.icon_state = "[answered_icon]"
@@ -181,6 +225,16 @@ TYPEINFO(/obj/machinery/phone)
 			if(user)
 				boutput(user, SPAN_ALERT("You short out the ringer circuit on the [src]."))
 			src.emagged = TRUE
+			// pick a random phone
+			src.caller_id_message = "<span style='color: #cccccc;'>???</span>"
+			var/list/phonebook = list()
+			for_by_tcl(P, /obj/machinery/phone)
+				if(P.unlisted)
+					continue
+				phonebook += P
+			if (length(phonebook))
+				var/obj/machinery/phone/prank = pick(phonebook)
+				src.caller_id_message = "<span style='color: [prank.stripe_color];'>[prank.phone_id]</span>"
 			return TRUE
 		return FALSE
 
@@ -188,6 +242,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.emagged)
 			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(!src.answered)
+				src.obj_speak("Call from [src.caller_id_message].")
 				src.icon_state = "[ringing_icon]"
 				UpdateIcon()
 			return
@@ -211,6 +266,7 @@ TYPEINFO(/obj/machinery/phone)
 					src.icon_state = "[ringing_icon]"
 					UpdateIcon()
 					src.last_ring = 0
+					src.obj_speak("Call from [src.caller_id_message].")
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -222,7 +278,7 @@ TYPEINFO(/obj/machinery/phone)
 		var/list/list/list/phonebook = list()
 		for_by_tcl(P, /obj/machinery/phone)
 			var/match_found = FALSE
-			if(P.unlisted)
+			if(P.unlisted || P == src)
 				continue
 			if (!(src.can_talk_across_z_levels && P.can_talk_across_z_levels) && (get_z(P) != get_z(src)))
 				continue
@@ -290,6 +346,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.handset = null
 		src.icon_state = "[phone_icon]"
 		tgui_process.close_uis(src)
+		src.ClearSpecificOverlays("phone_line_\ref[src]")
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
@@ -303,6 +360,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.handset.get_holder() && GET_DIST(src.handset,src.handset.get_holder()) < 1)
 			src.handset.get_holder()?.playsound_local(src.handset.get_holder(),'sound/machines/phones/dial.ogg' ,50,0)
 		src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
+		target.caller_id_message = "<span style='color: [src.stripe_color];'>[src.phone_id]</span>"
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || !target.connected || !src.answered)
@@ -324,7 +382,7 @@ TYPEINFO(/obj/machinery/phone)
 	if (!src.user_can_suicide(user))
 		return FALSE
 	if (ishuman(user))
-		user.visible_message(SPAN_ALERT("<b>[user] bashes the [src] into their head repeatedly!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] bashes the [src] into [his_or_her(user)] head repeatedly!</b>"))
 		user.TakeDamage("head", 150, 0)
 		return TRUE
 
@@ -337,6 +395,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/obj/machinery/phone/parent = null
 	flags = TALK_INTO_HAND
 	w_class = W_CLASS_TINY
+	var/icon/handset_icon = null
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
@@ -349,6 +408,7 @@ TYPEINFO(/obj/machinery/phone)
 		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.color = parent_phone.color
 		src.UpdateOverlays(stripe_image, "stripe")
+		src.handset_icon = getFlatIcon(src)
 		processing_items.Add(src)
 
 	proc/get_holder()
@@ -382,15 +442,44 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		if(GET_DIST(src, get_holder()) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
-		var/processed = SPAN_SAY("[SPAN_BOLD("[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]")]\] says, </span> [SPAN_MESSAGE("\"[text[1]]\"")]")
-		var/mob/T = src.parent.linked.handset.get_holder()
-		if(T?.client)
-			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
-				T.show_message(processed, 2)
-			M.show_message(processed, 2)
 
-			for (var/obj/item/device/radio/intercom/I in range(3, T))
-				I.talk_into(M, text, null, M.real_name, lang_id)
+		var/heard_name = M.get_heard_name(just_name_itself=TRUE)
+		if(M.mind)
+			heard_name = "<span class='name' data-ctx='\ref[M.mind]'>[heard_name]</span>"
+
+		var/obj/item/phone_handset/listener_handset = src.parent.linked.handset
+
+		var/mob/listener = listener_handset.get_holder()
+		if(listener?.client)
+			var/phone_ident = "\[ <span style=\"color:[src.parent.stripe_color]\">[bicon(src.handset_icon)] [src.parent.phone_id]</span> \]"
+			var/said_message = SPAN_SAY("[SPAN_BOLD("[heard_name] [phone_ident]")]  [SPAN_MESSAGE(M.say_quote(text[1]))]")
+			if (listener.client.holder && ismob(M) && M.mind)
+				said_message = "<span class='adminHearing' data-ctx='[listener.client.chatOutput.getContextFlags()]'>[said_message]</span>"
+
+			// chat feedback to let talker know when they are speaking over the phone
+			M.show_message(said_message, 2)
+
+			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
+				var/heard_voice = M.voice_name
+				if(M.mind)
+					heard_voice = "<span class='name' data-ctx='\ref[M.mind]'>[heard_voice]</span>"
+				if(!listener.say_understands(M, lang_id))
+					said_message = SPAN_SAY("[SPAN_BOLD("[heard_voice] [phone_ident]")] [SPAN_MESSAGE(M.voice_message)]")
+					if (listener.client.holder && ismob(M) && M.mind)
+						said_message = "<span class='adminHearing' data-ctx='[listener.client.chatOutput.getContextFlags()]'>[said_message]</span>"
+				listener.show_message(said_message, 2)
+
+			// intercoms overhear phone conversations
+			for (var/obj/item/device/radio/intercom/I in range(3, listener))
+				I.talk_into(M, text, null, M.get_heard_name(just_name_itself=TRUE), lang_id)
+
+	attack_hand(mob/user)
+		. = ..()
+		src.parent?.draw_cord()
+
+	dropped(mob/user)
+		. = ..()
+		src.parent?.draw_cord()
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25

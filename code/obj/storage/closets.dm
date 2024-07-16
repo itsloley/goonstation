@@ -85,7 +85,7 @@ TYPEINFO(/obj/storage/closet)
 			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
 			AM.throw_impact(src, thr)
 			AM.throwing = FALSE
-			AM.changeStatus("weakened", 1 SECOND)
+			AM.changeStatus("knockdown", 1 SECOND)
 			AM.set_loc(src.loc)
 			src.close()
 
@@ -242,7 +242,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(/obj/item/storage/box/handcuff_kit,
 	/obj/item/storage/box/flashbang_kit,
 	/obj/item/pinpointer/nuke = 5,
-	/obj/item/device/pda2/syndicate)
+	/obj/item/device/pda2/syndicate/nuclear)
 
 /obj/storage/closet/syndicate/malf
 	desc = "Gear preperations closet."

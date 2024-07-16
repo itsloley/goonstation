@@ -78,7 +78,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -119,6 +119,7 @@
 
 		boutput(src, rendered)
 		boutput(src.the_guy, rendered)
+		src.the_guy.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 60, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 
 	emote(act, voluntary=0)
 		..()
