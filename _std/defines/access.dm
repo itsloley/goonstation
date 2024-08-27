@@ -117,3 +117,6 @@
 
 // Pirate ship access:
 #define access_pirate 89
+
+// tutorial access:
+#define access_tutorialbasics 200

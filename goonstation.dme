@@ -2364,6 +2364,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\AbilityItem.dm"
 #include "code\WorkInProgress\actuallyKeelinsStuff.dm"
 #include "code\WorkInProgress\aloe_stuff_public.dm"
+#include "code\WorkInProgress\mothplush.dm"
+#include "code\WorkInProgress\tutorial.dm"
 #include "code\WorkInProgress\AphsStuff.dm"
 #include "code\WorkInProgress\AzrunStuff.dm"
 #include "code\WorkInProgress\Azungarstuff.dm"

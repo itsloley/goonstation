@@ -311,6 +311,11 @@
 		for (var/obj/O in src.loc)
 			O.req_access = null
 
+/obj/mapping_helper/access/tutorialbasics
+	name = "tutorial basics access spawn"
+	req_access = list(access_tutorialbasics)
+	color = COMMAND
+
 //////////////////////owlzone access///////
 /obj/mapping_helper/access/owlmaint
 	name = "owlery maint access spawn"

@@ -134,7 +134,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
-//#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
+#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
 //#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
@@ -164,7 +164,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------ HOLIDAYS AND OTHER SUCH TOGGLES ------//
 
-//#define RP_MODE 1
+#define RP_MODE 1
 //#define HALLOWEEN 1
 //#define SEASON_WINTER 1
 //#define SEASON_SPRING 1
@@ -222,8 +222,8 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
-#define BUILD_TIME_MONTH 01
-#define BUILD_TIME_DAY 13
+#define BUILD_TIME_MONTH 03
+#define BUILD_TIME_DAY 20
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30
