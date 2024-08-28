@@ -222,13 +222,18 @@
 		plantgenes.harvests = INFINITY
 
 /obj/artifact/prison/tutorial_artifact
+	name = "artifact prison (tutorial)"
+	associated_datum = /datum/artifact/prison/tutorial_artifact
+
+/datum/artifact/prison/tutorial_artifact
+	min_triggers = 1
+	max_triggers = 1
+	validtriggers = list(/datum/artifact_trigger/silicon_touch)
+	living = TRUE
+
 	New()
 		..()
-		artifact = new /datum/artifact/prison(src)
-		if(istype(artifact, /datum/artifact/prison))
-			var/datum/artifact/prison/prison_artifact = artifact
-			prison_artifact.validtriggers = list(/datum/artifact_trigger/silicon_touch)
-			prison_artifact.imprison_time = 200
+		imprison_time = 200
 
 /obj/item/tutorial/magicbell
 	name = "Magical Congratulations Bell"

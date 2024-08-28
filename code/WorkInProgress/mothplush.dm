@@ -13,6 +13,9 @@
 	is_npc = FALSE
 	has_genes = FALSE
 	hand_count = 2
+	flags = TABLEPASS | DOORPASS
+	fits_under_table = TRUE
+	voice_type = "roach"
 	var/scream_sound = 'sound/items/rubberduck.ogg'
 	var/scream_pitch = 3
 	var/update_icon_state = TRUE
@@ -20,8 +23,11 @@
 	New()
 		. = ..()
 		AddComponent(/datum/component/waddling)
+		src.bioHolder.AddEffect("xray", power = 2, magical=1)
 
 		abilityHolder.addAbility(/datum/targetable/critter/moth_plushie/teleport)
+		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
+		abilityHolder.addAbility(/datum/targetable/critter/moth_plushie/yippee)
 		abilityHolder.updateButtons()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -29,12 +35,16 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, scream_sound, 40, TRUE, 0.1, scream_pitch, channel=VOLUME_CHANNEL_EMOTE)
+					animate_smush(src)
 					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					animate_bouncy(src) // bouncy!
 					return SPAN_EMOTE("<b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!")
 		return ..()
+
+	animate_lying(lying)
+		animate_rest(src, !lying)
 
 	Login()
 		..()
@@ -50,6 +60,20 @@
 				src.icon_state = "lilyplush"
 				src.icon_state_alive = "lilyplush"
 				src.icon_state_dead = "lilyplush"
+
+/mob/living/critter/small_animal/mothplush/ly
+	icon_state = "lyplush"
+	icon_state_alive = "lyplush"
+	icon_state_dead = "lyplush"
+	update_moth_icon()
+		return
+
+/mob/living/critter/small_animal/mothplush/lily
+	icon_state = "lilyplush"
+	icon_state_alive = "lilyplush"
+	icon_state_dead = "lilyplush"
+	update_moth_icon()
+		return
 
 /datum/targetable/critter/moth_plushie/teleport
 	name = "Teleport"
@@ -90,6 +114,24 @@
 					animate(holder.owner, alpha=255, time=1.5 SECONDS)
 		else
 			return
+
+/datum/targetable/critter/moth_plushie/yippee
+	name = "Yippee!"
+	desc = "Celebrate a selected object!"
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "pandemonium"
+	cooldown = 0
+	targeted = 1
+	target_anything = 1
+
+	cast(atom/target)
+		..()
+		var/tloc = target
+		if (!isturf(target))
+			tloc = target.loc
+		particleMaster.SpawnSystem(new /datum/particleSystem/confetti(tloc))
+		SPAWN(1 SECOND)
+			playsound(tloc, 'sound/voice/yayyy.ogg', 50, 1)
 
 /mob/living/critter/small_animal/mothplush/kity
 	name = "kity"
