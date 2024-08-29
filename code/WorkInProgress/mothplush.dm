@@ -15,7 +15,7 @@
 	hand_count = 2
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = TRUE
-	voice_type = "roach"
+	voice_type = "bloop"
 	var/scream_sound = 'sound/items/rubberduck.ogg'
 	var/scream_pitch = 3
 	var/update_icon_state = TRUE
@@ -23,10 +23,9 @@
 	New()
 		. = ..()
 		AddComponent(/datum/component/waddling)
-		src.bioHolder.AddEffect("xray", power = 2, magical=1)
 
 		abilityHolder.addAbility(/datum/targetable/critter/moth_plushie/teleport)
-		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
+		abilityHolder.addAbility(/datum/targetable/gimmick/reveal/mothplush)
 		abilityHolder.addAbility(/datum/targetable/critter/moth_plushie/yippee)
 		abilityHolder.updateButtons()
 
@@ -48,6 +47,7 @@
 
 	Login()
 		..()
+		src.bioHolder.AddEffect("xray", power = 2, magical=1)
 		update_moth_icon()
 
 	proc/update_moth_icon()
@@ -56,15 +56,18 @@
 				src.icon_state = "lyplush"
 				src.icon_state_alive = "lyplush"
 				src.icon_state_dead = "lyplush"
+				src.speechpopupstyle = "color: #5D99D2 !important; font-family: 'Inhuman BB'; font-size: 8px; -dm-text-outline: 1px black;"
 			else if (src.ckey == "beshemoth" || src.ckey == "lythine")
 				src.icon_state = "lilyplush"
 				src.icon_state_alive = "lilyplush"
 				src.icon_state_dead = "lilyplush"
+				src.speechpopupstyle = "color: #948BFF !important; font-family: 'Inhuman BB'; font-size: 8px; -dm-text-outline: 1px black;"
 
 /mob/living/critter/small_animal/mothplush/ly
 	icon_state = "lyplush"
 	icon_state_alive = "lyplush"
 	icon_state_dead = "lyplush"
+	speechpopupstyle = "color: #5D99D2 !important; font-family: 'Inhuman BB'; font-size: 8px; -dm-text-outline: 1px black;"
 	update_moth_icon()
 		return
 
@@ -72,8 +75,14 @@
 	icon_state = "lilyplush"
 	icon_state_alive = "lilyplush"
 	icon_state_dead = "lilyplush"
+	speechpopupstyle = "color: #948BFF !important; font-family: 'Inhuman BB'; font-size: 8px; -dm-text-outline: 1px black;"
 	update_moth_icon()
 		return
+
+/datum/targetable/gimmick/reveal/mothplush
+	cast(atom/T)
+		..()
+		usr.flags = DOORPASS | TABLEPASS
 
 /datum/targetable/critter/moth_plushie/teleport
 	name = "Teleport"
