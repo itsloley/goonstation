@@ -316,6 +316,11 @@
 	req_access = list(access_tutorialbasics)
 	color = COMMAND
 
+/obj/mapping_helper/access/tutorialend
+	name = "tutorial end access spawn"
+	req_access = list(access_tutorialend)
+	color = COMMAND
+
 //////////////////////owlzone access///////
 /obj/mapping_helper/access/owlmaint
 	name = "owlery maint access spawn"
