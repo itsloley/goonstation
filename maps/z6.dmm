@@ -1965,6 +1965,19 @@
 	icon_state = "floor2"
 	},
 /area/tutorial/basics/dock)
+"nu" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of an interesting alien-like creature. Judging by the order of the portraits, they must be new!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_maxi";
+	name = "pink creature photo";
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/blue/side{
+	dir = 1
+	},
+/area/tutorial/basics)
 "nx" = (
 /obj/decal/tile_edge/check{
 	dir = 10;
@@ -2225,10 +2238,10 @@
 /obj/storage/closet/wardrobe/pride,
 /obj/fakeobject{
 	anchored = 1;
-	desc = "A photograph of a dog who seems to be quite the culinary expert.";
+	desc = "I DIDNT HAVE UFKCING TIME FOR THIS I DIDNT THINK YOU WERE JOINING AAAAHHH";
 	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_mike";
-	name = "dog photo";
+	icon_state = "picture_saturn";
+	name = "stock image of an animal";
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/blue/side{
@@ -3674,6 +3687,14 @@
 	layer = 2.8;
 	info = "Boss, just a heads up. You should probably actually set the code to your safe. 1234 is—quite possibly—the worst code you could possibly use.<br>Did you really not consider actually setting it to something unique once you bought this damn thing? It leads to your secret stash of cash, for fuck's sake.<br>Can you please change the code to literally anything else ASAP?</b> It's not exactly subtle, and you're going to be pissed if anyone gets your money.<br>    Just thought you should know before someone else does.<br>    <font size=1>—Yours unfortunately endowed, Officer Deatin 'Maine' Tenants.</font>"
 	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a dog who seems to be quite the culinary expert. He is learnding about trains And couldnt make it!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_mike";
+	name = "dog photo";
+	pixel_y = 28
+	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
@@ -5062,6 +5083,17 @@
 	dir = 4
 	},
 /area/tutorial/basics/pool)
+"KK" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of an interesting alien-like creature. Judging by the order of the portraits, they must be new!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_maxi";
+	name = "pink creature photo";
+	pixel_y = 28
+	},
+/turf/simulated/wall/auto/jen,
+/area/tutorial/basics)
 "KL" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -25470,7 +25502,7 @@ GV
 GV
 Uc
 Sz
-iF
+KK
 QQ
 XR
 XR
@@ -25987,7 +26019,7 @@ hQ
 Py
 CP
 ea
-tJ
+nu
 XR
 XR
 cB
