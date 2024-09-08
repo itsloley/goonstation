@@ -292,7 +292,7 @@ or don't if it uses a custom topopen overlay
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
-	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
+	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
 			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
@@ -587,12 +587,7 @@ or don't if it uses a custom topopen overlay
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
-		if(istype(W, /obj/item/clothing/head/butt))
-			var/obj/item/clothing/head/butt/butt = W
-			if(butt.donor == user)
-				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
-
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
 			user.show_message(SPAN_ALERT("[src] already has a plating kit installed!"))
