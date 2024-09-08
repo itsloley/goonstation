@@ -1404,7 +1404,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			"hotshot" = new/datum/projectile/bullet/flare,
 			"assault" = new/datum/projectile/laser/asslaser,
 			"clownshot" = new/datum/projectile/bullet/clownshot,
-			"pulse" = new/datum/projectile/energy_bolt/pulse
+			"pulse" = new/datum/projectile/energy_bolt/pulse,
 			"kity" = new/datum/projectile/bullet/kity
 		)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
