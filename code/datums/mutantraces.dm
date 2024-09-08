@@ -406,9 +406,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return // please dont call set_mutantrace on a non-human non-appearanceholder
 
 		AH.mob_appearance_flags = src.mutant_appearance_flags
-		AH.customization_first_offset_y = src.head_offset
-		AH.customization_second_offset_y = src.head_offset
-		AH.customization_third_offset_y = src.head_offset
+		AH.customizations["hair_bottom"].offset_y = src.head_offset
+		AH.customizations["hair_middle"].offset_y = src.head_offset
+		AH.customizations["hair_top"].offset_y = src.head_offset
 
 		var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
 		if(typeinfo.special_styles)
@@ -452,17 +452,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_arm_offset = src.arm_offset
 
 		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customization_first_color = fix_colors(AH.customization_first_color)
-			AH.customization_second_color = fix_colors(AH.customization_second_color)
-			AH.customization_third_color = fix_colors(AH.customization_third_color)
+			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
-			AH.s_tone = AH.customization_first_color
+			AH.s_tone = AH.customizations["hair_bottom"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
-			AH.s_tone = AH.customization_second_color
+			AH.s_tone = AH.customizations["hair_middle"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
-			AH.s_tone = AH.customization_third_color
+			AH.s_tone = AH.customizations["hair_top"].color
 		else
 			AH.s_tone = AH.s_tone_original
 
@@ -827,7 +827,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	name = "lizard"
 	icon_state = "body_m"
 	override_attack = 0
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_HUMAN_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS | HAS_LONG_NOSE)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS | HAS_LONG_NOSE)
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
@@ -1113,7 +1113,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 	voice_override = "skelly"
 	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
 	"right_eye" = /obj/item/organ/eye/skeleton)
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_HUMAN_HAIR |BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/right
@@ -1816,7 +1816,7 @@ TYPEINFO(/datum/mutantrace/roach)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_HUMAN_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.5, "crush" = 1.5)
 	dna_mutagen_banned = FALSE
@@ -1830,6 +1830,7 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
 
 	say_verb()
 		return "clicks"
@@ -1843,6 +1844,7 @@ TYPEINFO(/datum/mutantrace/roach)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
+			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
 
 TYPEINFO(/datum/mutantrace/cat)
@@ -1861,7 +1863,7 @@ TYPEINFO(/datum/mutantrace/cat)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_HUMAN_HAIR | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 
 	on_attach(mob/living/carbon/human/M)
 		. = ..()
@@ -1890,7 +1892,7 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	dna_mutagen_banned = FALSE
 	genetics_removable = FALSE
 	aquaphobic = TRUE
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_HUMAN_HAIR | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
@@ -2160,7 +2162,7 @@ TYPEINFO(/datum/mutantrace/cow)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_HUMAN_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
 	dna_mutagen_banned = FALSE
@@ -2319,7 +2321,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | HAS_HUMAN_HAIR | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
