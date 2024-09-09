@@ -317,6 +317,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/supplydrop_spawn_obj,
 		/datum/admins/proc/demonically_spawn_obj,
 		/datum/admins/proc/spawn_figurine,
+		/client/proc/too_many_cooks,
 
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
