@@ -2465,6 +2465,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\ly\mothplush.dm"
 #include "code\WorkInProgress\ly\toomanycooks.dm"
 #include "code\WorkInProgress\ly\mysterybox.dm"
+#include "code\WorkInProgress\ly\mappingstuff.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
 #include "code\WorkInProgress\pali\blob_fabricator.dm"
 #include "code\WorkInProgress\pali\pali.dm"
