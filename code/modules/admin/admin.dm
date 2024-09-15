@@ -2164,9 +2164,13 @@ var/global/noir = 0
 									if(ispath(path, /turf))
 										var/turf/T = locate(0 + X,0 + Y,0 + Z)
 										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+										thing.set_dir(direction ? direction : SOUTH)
 									else
-										thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.set_dir(direction ? direction : SOUTH)
+										new /dmm_suite/preloader(locate(X, Y, Z), list("dir" = direction ? direction : SOUTH))
+										thing = new path(locate(X, Y, Z))
+										if(isobj(thing))
+											var/obj/O = thing
+											O.initialize(TRUE)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
@@ -2176,9 +2180,13 @@ var/global/noir = 0
 										if(ispath(path, /turf))
 											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
 											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+											thing.set_dir(direction ? direction : SOUTH)
 										else
+											new /dmm_suite/preloader(locate(loc.x + X,loc.y + Y,loc.z + Z), list("dir" = direction ? direction : SOUTH))
 											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.set_dir(direction ? direction : SOUTH)
+											if(isobj(thing))
+												var/obj/O = thing
+												O.initialize(TRUE)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -3406,7 +3414,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("http://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
+				usr << link("[goonhub_href("/admin/logs/[roundId]")]")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -4145,6 +4153,9 @@ var/global/noir = 0
 					A = new chosen(usr.loc)
 				else
 					A = new chosen(get_turf(usr))
+				if(isobj(A))
+					var/obj/O = A
+					O.initialize(TRUE)
 				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(usr)])")
