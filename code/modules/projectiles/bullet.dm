@@ -542,6 +542,7 @@ toxic - poisons
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
 		drop_as_ammo(get_turf(T))
+		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()
@@ -720,7 +721,7 @@ toxic - poisons
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 18
+	damage = 13
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 4 //spread handles most of this
@@ -958,7 +959,7 @@ toxic - poisons
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
-	icon_state = "trace"
+	icon_state = "metalproj"
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
@@ -967,7 +968,7 @@ toxic - poisons
 /datum/projectile/bullet/improvbone
 	name = "bone"
 	sname = "bone"
-	icon_state = "trace"
+	icon_state = "boneproj"
 	dissipation_delay = 1
 	dissipation_rate = 3
 	damage_type = D_KINETIC
