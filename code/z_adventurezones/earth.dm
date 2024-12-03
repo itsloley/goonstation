@@ -275,10 +275,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		name = "Office of Shitty Bill Jr."
 	ly
 		ckey = "lyy"
-		name = "Office of Cogwerks"
+		name = "Office of Ly"
 	lily
 		ckey = "beshemoth"
-		name = "Office of Cogwerks"
+		name = "Office of Lily"
 /area/centcom/lobby
 	name = "NT Offices Lobby"
 	icon_state = "blue"
