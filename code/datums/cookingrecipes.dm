@@ -2258,7 +2258,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/brownie_batch/
 
-/datum/cookingrecipe/oven/kityburger
+/datum/cookingrecipe/oven/burger/kityburger
 	item1 = /obj/item/kity
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	cookbonus = 13

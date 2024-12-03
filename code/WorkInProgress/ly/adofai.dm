@@ -175,6 +175,7 @@
 		return 0
 
 	vomit()
+		..()
 		return
 
 	movement_delay()
@@ -246,7 +247,7 @@
 						if (A.swapped_planets)
 							M.firegib()
 						else
-							M.become_statue_ice()
+							M.become_statue("ice")
 					else
 						M.TakeDamage("All", 0, 15)
 						if (A.swapped_planets)
