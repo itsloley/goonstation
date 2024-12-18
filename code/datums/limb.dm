@@ -429,6 +429,15 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
+	martian_ray
+		proj = new/datum/projectile/energy_bolt/raybeam
+		shots = 3
+		current_shots = 9
+		cooldown = 1 SECONDS
+		reload_time = 3 SECONDS
+		spread_angle = 3
+
+
 /datum/limb/gun/spawner
 	proj = new/datum/projectile/special/spawner
 	shots = 1
@@ -815,8 +824,8 @@
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 				hit = TRUE
-			else if(istype(target, /obj/grille))
-				var/obj/grille/O = target
+			else if(istype(target, /obj/mesh/grille))
+				var/obj/mesh/grille/O = target
 				if (!O.shock(user, 70))
 					O.visible_message(SPAN_COMBAT("<b>[user]</b> violently slashes [O]!"))
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)

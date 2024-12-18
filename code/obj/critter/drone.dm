@@ -98,7 +98,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	var/smashes_shit = 0
 	var/smashed_recently = 0
 	var/smash_cooldown = 200
-	var/list/can_smash = list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack)
+	var/list/can_smash = list(/obj/window, /obj/mesh/grille, /obj/table, /obj/foamedmetal, /obj/rack)
 	var/list/do_not_smash = list(/obj/critter, /obj/machinery/vehicle, /obj/machinery/cruiser)
 
 	var/projectile_spread = 0
@@ -132,7 +132,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				if(istype(AM, /obj/window))
 					AM:health = 0
 					AM:smash()
-				else if(istype(AM,/obj/grille))
+				else if(istype(AM,/obj/mesh/grille))
 					AM:damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()
@@ -178,7 +178,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0)
 						continue
-					if (!(C.faction & FACTION_SYNDICATE))
+					if (!(FACTION_SYNDICATE in C.faction))
 						src.attack = 1
 					if (C.name == src.attacker)
 						src.attack = 1

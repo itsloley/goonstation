@@ -256,16 +256,6 @@ TYPEINFO(/obj/item/rcd)
 		qdel(A)
 
 	proc/handle_floors_and_walls(atom/A, mob/user)
-		if (istype(A, /obj/lattice) || istype(A, /turf/space))
-			if (istype(A, /obj/lattice))
-				var/turf/L = get_turf(A)
-				if (!istype(L, /turf/space))
-					return
-				A = L
-
-			src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
-			return
-
 		if (istype(A, /turf/simulated/floor))
 			src.do_rcd_action(user, A, "building a wall", matter_create_wall, time_create_wall, PROC_REF(handle_build_wall), src)
 			return
@@ -281,6 +271,16 @@ TYPEINFO(/obj/item/rcd)
 		if (istype(A, /obj/structure/girder) && !istype(A, /obj/structure/girder/displaced))
 			src.do_rcd_action(user, A, "turning \the [A] into a wall", matter_create_wall_girder, time_create_wall_girder, PROC_REF(handle_convert_girder_to_wall), src)
 			return
+
+		if (istype(A, /obj/lattice) || istype(A, /turf))
+			var/turf/T = A
+			if (istype(A, /obj/lattice))
+				var/turf/L = get_turf(A)
+				A = L
+				T = L
+			if (T.can_build)
+				src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
+				return
 
 	proc/do_unreinforce_wall(turf/target, mob/user)
 		PROTECTED_PROC(TRUE)
@@ -409,8 +409,8 @@ TYPEINFO(/obj/item/rcd)
 	proc/handle_windows(atom/A, mob/user)
 		PRIVATE_PROC(TRUE)
 
-		if (istype(A, /turf/simulated/floor) || istype(A, /obj/grille/))
-			if (istype(A, /obj/grille/))
+		if (istype(A, /turf/simulated/floor) || istype(A, /obj/mesh/grille/))
+			if (istype(A, /obj/mesh/grille/))
 				// You can do this with normal windows. So now you can do it with RCD windows. Honke.
 				A = get_turf(A)
 				if (!istype(A, /turf/simulated/floor))
@@ -574,8 +574,8 @@ TYPEINFO(/obj/item/rcd)
 		T.set_dir(user.dir)
 		for (var/obj/window/auto/O in orange(1,T))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,T))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,T))
+			M.UpdateIcon()
 		for (var/turf/simulated/wall/auto/W in orange(1,T))
 			W.UpdateIcon()
 		for (var/turf/simulated/wall/false_wall/F in orange(1,T))
