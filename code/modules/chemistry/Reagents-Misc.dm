@@ -1078,18 +1078,6 @@ datum
 			hygiene_value = -0.5
 			viscosity = 0.55
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if (method == INGEST)
-					var/ranchance = rand(1,10)
-					if (ranchance == 1)
-						boutput(M, SPAN_ALERT("You feel very sick."))
-						M.reagents.add_reagent("toxin", rand(1,5))
-					else if (ranchance <= 5)
-						boutput(M, SPAN_ALERT("That tasted absolutely FOUL."))
-						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
-					else boutput(M, SPAN_ALERT("Yuck!"))
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.endurance_bonus += 0.5
@@ -1237,23 +1225,22 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 5)
-					for (var/obj/decal/bloodtrace/B in T)
-						B.invisibility = INVIS_NONE
+				for (var/obj/decal/bloodtrace/B in T)
+					B.invisibility = INVIS_NONE
+					SPAWN(30 SECONDS)
+						B?.invisibility = INVIS_ALWAYS
+				for (var/obj/item/I in T)
+					if (I.get_forensic_trace("bDNA"))
+						var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+						blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+						blood_overlay.color = "#3399FF"
+						blood_overlay.alpha = 100
+						blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+						I.appearance_flags |= KEEP_TOGETHER
+						I.UpdateOverlays(blood_overlay, "blood_traces")
 						SPAWN(30 SECONDS)
-							B?.invisibility = INVIS_ALWAYS
-					for (var/obj/item/I in T)
-						if (I.get_forensic_trace("bDNA"))
-							var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
-							blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
-							blood_overlay.color = "#3399FF"
-							blood_overlay.alpha = 100
-							blood_overlay.blend_mode = BLEND_INSET_OVERLAY
-							I.appearance_flags |= KEEP_TOGETHER
-							I.UpdateOverlays(blood_overlay, "blood_traces")
-							SPAWN(30 SECONDS)
-								I?.appearance_flags &= ~KEEP_TOGETHER
-								I?.UpdateOverlays(null, "blood_traces")
+							I?.appearance_flags &= ~KEEP_TOGETHER
+							I?.UpdateOverlays(null, "blood_traces")
 
 		oil
 			name = "oil"
@@ -1296,7 +1283,7 @@ datum
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							if (!H.mutantrace.aquaphobic)
+							if (!H.mutantrace?.aquaphobic)
 								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
@@ -1343,6 +1330,11 @@ datum
 						M.changeStatus("paralysis", 3 SECONDS * mult)
 						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.setStatusMin("paralysis", 3 SECONDS * mult)
 					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
@@ -1373,6 +1365,11 @@ datum
 					if (10 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 				if (counter >= 19 && !fakedeathed)
+					#ifdef COMSIG_MOB_FAKE_DEATH
+					SEND_SIGNAL(M, COMSIG_MOB_FAKE_DEATH)
+					#endif
+					if (deathConfettiActive)
+						M.deathConfetti()
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -1673,7 +1670,7 @@ datum
 						var/amt = min(volume/100,1)
 						src.holder.remove_reagent("sewage",amt)
 						M.reagents.add_reagent("sewage",amt)
-						src.reaction_mob(M,INGEST,amt)
+						src.reaction_mob(M,INGEST,amt,null,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1789,7 +1786,7 @@ datum
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
-				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
+				else if (prob(10) && !HAS_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT)) //doesn't just go thru mob/proc/vomit because we don't want to re-vomit if there are already spiders on the floor, to not spam spiderlings
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))
@@ -2206,7 +2203,7 @@ datum
 				return
 
 			proc/replace_organ(var/mob/living/carbon/human/H)
-				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/organ_name = pick(non_vital_organ_strings)
 				var/obj/item/organ/organ = H.get_organ(organ_name)
 				if (istype(organ, /obj/item/organ/flock_crystal))
 					return
@@ -3239,7 +3236,7 @@ datum
 							blood.blood_DNA = bioHolder.Uid
 						blood.reagents.add_reagent(src.id, volume, src.data)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, paramslist = 0)
 				. = ..()
 				if (!volume_passed) return
 				if (!ishuman(M)) return
@@ -3264,11 +3261,11 @@ datum
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
-								M.change_vampire_blood(bloodget, 1) // vamp_blood
-								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
-								V.blood_tracking_output()
+								var/datum/bioHolder/unlinked/bioHolder = src.data
+								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
-								holder.del_reagent(src.id)
+								if("digestion" in paramslist)
+									holder.del_reagent(src.id)
 								return 0
 				return 1
 

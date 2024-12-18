@@ -543,6 +543,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/mob/living/living_target = target
 		living_target.give_item()
 		return
+	else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+		if (src.auto_pickup_item(target))
+			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 		src.throw_item(target,params)
 		return
@@ -879,6 +882,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"))
 		setdead(src)
 		icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
+		src.update_body()
 	empty_hands()
 	if (do_drop_equipment)
 		drop_equipment()
@@ -1084,7 +1088,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/emote(var/act, var/voluntary = 0)
 	..()
 	var/param = null
-
+	if (src.hasStatus("paralysis"))
+		return //aaaa
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
@@ -1670,6 +1675,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 
 	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
 	emp_act()
@@ -1683,9 +1689,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	can_drink()
 		return FALSE
-
-	vomit()
-		return
 
 	isBlindImmune()
 		return TRUE
