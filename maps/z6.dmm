@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/decal/cleanable/blood/drip/high,
+/turf/unsimulated/floor/cave/asteroid,
+/area/tutorial/basics/space)
 "ac" = (
 /obj/fakeobject/plantpot,
 /obj/shrub{
@@ -59,12 +63,23 @@
 "aq" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/tutorial/basics/engineering)
+"ar" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafrafriend2";
+	name = "friend #2 photo";
+	pixel_y = -28;
+	desc = "Another photograph of a dog. This is too much!"
+	},
+/turf/unsimulated/floor/blue/side,
+/area/tutorial/basics)
 "at" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "av" = (
 /mob/living/critter/human/syndicate/knife,
@@ -96,6 +111,13 @@
 	icon_state = "L6"
 	},
 /area/tutorial/basics)
+"aD" = (
+/obj/range_target,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/tutorial/basics/space)
 "aE" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/disk/data/tape{
@@ -262,6 +284,14 @@
 "bt" = (
 /turf/unsimulated/floor/black,
 /area/tutorial/basics/medbay)
+"bw" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/unsimulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/tutorial/basics/pool)
 "bx" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/unsimulated/floor/black,
@@ -416,6 +446,14 @@
 /area/tutorial/basics/science)
 "dj" = (
 /obj/table/glass/reinforced/auto,
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafrafriend1";
+	name = "friend photo";
+	pixel_y = -28;
+	desc = "A photograph of a friend of a friend! Again!"
+	},
 /turf/unsimulated/floor/blue/side,
 /area/tutorial/basics)
 "dk" = (
@@ -444,6 +482,16 @@
 /obj/dialogueobj/syndiecorpse1,
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor/red,
+/area/tutorial/basics/space)
+"dy" = (
+/obj/decal/cleanable/blood/drip/med,
+/obj/decal/tile_edge/floorguide/arrow_w{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
 /area/tutorial/basics/space)
 "dD" = (
 /turf/simulated/wall/auto/asteroid,
@@ -552,7 +600,7 @@
 	},
 /area/tutorial/basics/bar)
 "eu" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
@@ -688,7 +736,7 @@
 /turf/unsimulated/floor/black,
 /area/tutorial/basics/engineering)
 "fg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
@@ -703,6 +751,18 @@
 	dir = 8
 	},
 /area/tutorial/basics/dock)
+"fl" = (
+/obj/warp_zone{
+	teleport_x = 70;
+	teleport_y = 200;
+	teleport_z = 6;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "portal"
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/tutorial/basics/space)
 "fm" = (
 /turf/unsimulated/floor{
 	icon_state = "L15"
@@ -770,7 +830,7 @@
 /area/tutorial/basics/civilian)
 "fT" = (
 /obj/item/raw_material/scrap_metal,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/reinforced{
 	dir = 1
 	},
@@ -929,7 +989,7 @@
 "gA" = (
 /obj/decal/cleanable/blood/drip/low,
 /obj/bomb_decoy,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "gC" = (
 /obj/machinery/light/incandescent/netural{
@@ -1008,6 +1068,10 @@
 	desc = "Probably waterproof. You never really knew how these things worked.";
 	name = "cool pool lighting"
 	},
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/unsimulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -1023,6 +1087,13 @@
 "hx" = (
 /turf/unsimulated/floor/arrival,
 /area/tutorial/basics)
+"hC" = (
+/obj/item/clothing/head/party/birthday{
+	name = "Hat of Shame";
+	desc = "If you have this hat, you would have been long since dead in a real shift!"
+	},
+/turf/unsimulated/floor/carpet/clowncarpet,
+/area/tutorial/basics/space)
 "hD" = (
 /obj/stool/bench/blue,
 /obj/fakeobject{
@@ -1079,7 +1150,7 @@
 /turf/space,
 /area/tutorial/basics/dock)
 "hL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
@@ -1124,6 +1195,13 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
+"hX" = (
+/obj/decal/cleanable/blood/drip/med,
+/obj/decal/cleanable/blood/drip/med,
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/tutorial/basics/space)
 "ic" = (
 /obj/indestructible/invisible_block,
 /turf/space,
@@ -1216,7 +1294,7 @@
 /area/tutorial/basics)
 "iC" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "iD" = (
 /obj/machinery/light/emergencyflashing{
@@ -1230,7 +1308,8 @@
 "iE" = (
 /obj/machinery/door_control/bolter{
 	pixel_x = -29;
-	id = "tutorialbar_exit"
+	id = "tutorialbar_exit";
+	dir = 8
 	},
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
@@ -1272,7 +1351,7 @@
 	},
 /area/tutorial/basics)
 "iY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/yellow{
@@ -1348,7 +1427,7 @@
 /turf/unsimulated/floor,
 /area/tutorial/basics)
 "jH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -1565,6 +1644,10 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
+"kV" = (
+/obj/machinery/vehicle/miniputt/armed,
+/turf/space,
+/area/tutorial/basics/space)
 "kW" = (
 /obj/window/auto/reinforced/indestructible/extreme,
 /turf/unsimulated/floor/plating,
@@ -1572,6 +1655,10 @@
 "ld" = (
 /turf/space/shuttle_transit,
 /area/shuttle_particle_spawn/east)
+"le" = (
+/obj/map/light/brightwhite,
+/turf/unsimulated/floor/cave/asteroid,
+/area/tutorial/basics/space)
 "li" = (
 /turf/unsimulated/floor/orangeblack,
 /area/tutorial/basics/engineering)
@@ -1812,6 +1899,14 @@
 /area/tutorial/basics/space)
 "mI" = (
 /obj/table/glass/reinforced/auto,
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafra";
+	name = "dog #2 photo";
+	pixel_y = -28;
+	desc = "Another photograph of a dog. This is too much!"
+	},
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
@@ -1966,13 +2061,9 @@
 	},
 /area/tutorial/basics/dock)
 "nu" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of an interesting alien-like creature. Judging by the order of the portraits, they must be new!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_maxi";
-	name = "pink creature photo";
-	pixel_y = 28
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
@@ -2119,6 +2210,9 @@
 /obj/machinery/mixer,
 /turf/unsimulated/floor/white/checker2,
 /area/tutorial/basics/civilian)
+"oe" = (
+/turf/unsimulated/floor/carpet/clowncarpet,
+/area/tutorial/basics/space)
 "og" = (
 /obj/decal/stage_edge{
 	dir = 8;
@@ -2186,7 +2280,7 @@
 	},
 /area/tutorial/basics/medbay)
 "oL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/reinforced{
 	dir = 8
 	},
@@ -2227,6 +2321,10 @@
 	},
 /turf/space/shuttle_transit,
 /area/shuttle/tutorial/syndicates)
+"pc" = (
+/obj/decal/cleanable/blood/drip/med,
+/turf/unsimulated/floor/carpet/clowncarpet/border,
+/area/tutorial/basics/space)
 "pd" = (
 /obj/fakeobject/cargopad{
 	layer = 2
@@ -2238,11 +2336,14 @@
 /obj/storage/closet/wardrobe/pride,
 /obj/fakeobject{
 	anchored = 1;
-	desc = "I DIDNT HAVE UFKCING TIME FOR THIS I DIDNT THINK YOU WERE JOINING AAAAHHH";
+	desc = "The skunch.";
 	icon = 'icons/misc/tutorial.dmi';
 	icon_state = "picture_saturn";
 	name = "stock image of an animal";
 	pixel_y = 28
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
@@ -2255,7 +2356,7 @@
 	},
 /area/tutorial/basics/engineering)
 "pn" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -2341,7 +2442,7 @@
 	},
 /area/tutorial/basics)
 "pV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -2398,6 +2499,14 @@
 /turf/simulated/floor/orangeblack,
 /area/tutorial/basics/engineering)
 "qn" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a cool bunny!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_lucia";
+	name = "bunny photo";
+	pixel_y = -28
+	},
 /obj/table/glass/reinforced/auto,
 /obj/item/storage/box/donkpocket_kit{
 	pixel_x = 1;
@@ -2537,6 +2646,16 @@
 	dir = 4
 	},
 /area/tutorial/basics/pool)
+"qV" = (
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 4;
+	pixel_y = 8;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/tutorial/basics/space)
 "qZ" = (
 /turf/unsimulated/floor/carpet/blue{
 	icon_state = "fblue2";
@@ -2586,7 +2705,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "rz" = (
 /obj/decal/cleanable/blood/gibs,
@@ -2778,6 +2897,15 @@
 	icon_state = "fblue2"
 	},
 /area/tutorial/basics/medbay)
+"sF" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/obj/decal/cleanable/blood/drip/med,
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 9
+	},
+/area/tutorial/basics/space)
 "sJ" = (
 /turf/unsimulated/floor/carpet/blue{
 	dir = 1;
@@ -2816,6 +2944,10 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
+/turf/space,
+/area/tutorial/basics/space)
+"ta" = (
+/obj/forcefield/meteorshield,
 /turf/space,
 /area/tutorial/basics/space)
 "tb" = (
@@ -2863,6 +2995,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/tutorial/syndicateship)
+"ts" = (
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/turf/unsimulated/floor/blue/side,
+/area/tutorial/basics)
 "tu" = (
 /obj/disposalpipe/segment/food,
 /obj/machinery/light/incandescent/netural{
@@ -2886,10 +3024,6 @@
 	dir = 1
 	},
 /area/tutorial/basics)
-"tM" = (
-/obj/grille/catwalk,
-/turf/space,
-/area/tutorial/basics/space)
 "tT" = (
 /obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/black,
@@ -3183,6 +3317,19 @@
 	icon_state = "fblue2"
 	},
 /area/tutorial/basics/medbay)
+"wi" = (
+/obj/machinery/light/incandescent/cool,
+/obj/decal/cleanable/blood/drip/high,
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Breaks things down into metal/glass/waste";
+	icon = 'icons/obj/scrap.dmi';
+	icon_state = "Crusher_1";
+	name = "Crusher Unit";
+	density = 1
+	},
+/turf/unsimulated/floor/caution/west,
+/area/tutorial/basics/space)
 "wm" = (
 /obj/indestructible/invisible_block,
 /obj/item/tutorial/shuttlecaller{
@@ -3205,6 +3352,16 @@
 "wp" = (
 /turf/unsimulated/floor/white,
 /area/tutorial/basics/medbay)
+"wA" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/clothing/gloves/water_wings,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/unsimulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/tutorial/basics/pool)
 "wD" = (
 /obj/machinery/light/small/floor/broken,
 /turf/unsimulated/floor/shuttle{
@@ -3300,11 +3457,10 @@
 /turf/simulated/floor/plating/scorched,
 /area/tutorial/basics/engineering)
 "xd" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/railing/reinforced,
 /turf/space,
 /area/tutorial/basics/space)
 "xf" = (
@@ -3340,6 +3496,17 @@
 "xp" = (
 /turf/unsimulated/floor/red,
 /area/tutorial/basics/space)
+"xq" = (
+/obj/pool/perspective{
+	density = 0
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/unsimulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area/tutorial/basics/pool)
 "xr" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/purpleblack{
@@ -3488,7 +3655,7 @@
 /obj/decal/cleanable/blood/drip/med,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/gibs,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "yP" = (
 /turf/unsimulated/floor/carpet/blue{
@@ -3585,7 +3752,7 @@
 "zF" = (
 /obj/decal/cleanable/blood/drip/med,
 /obj/dialogueobj/syndiecorpse5,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "zG" = (
 /turf/unsimulated/floor/carpet/blue{
@@ -3687,14 +3854,6 @@
 	layer = 2.8;
 	info = "Boss, just a heads up. You should probably actually set the code to your safe. 1234 is—quite possibly—the worst code you could possibly use.<br>Did you really not consider actually setting it to something unique once you bought this damn thing? It leads to your secret stash of cash, for fuck's sake.<br>Can you please change the code to literally anything else ASAP?</b> It's not exactly subtle, and you're going to be pissed if anyone gets your money.<br>    Just thought you should know before someone else does.<br>    <font size=1>—Yours unfortunately endowed, Officer Deatin 'Maine' Tenants.</font>"
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of a dog who seems to be quite the culinary expert. He is learnding about trains And couldnt make it!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_mike";
-	name = "dog photo";
-	pixel_y = 28
-	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
@@ -3703,10 +3862,16 @@
 /obj/pool/perspective{
 	density = 0
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
 /turf/unsimulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/tutorial/basics/pool)
+"Aj" = (
+/turf/unsimulated/floor/cave/asteroid,
+/area/tutorial/basics/space)
 "Al" = (
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
@@ -3851,6 +4016,9 @@
 	name = "Tutorial Door Control";
 	pixel_y = 29
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
@@ -3927,11 +4095,32 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/blue,
 /area/tutorial/basics/medbay)
+"Co" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Breaks things down into metal/glass/waste";
+	icon = 'icons/obj/scrap.dmi';
+	icon_state = "Crusher_1";
+	name = "Crusher Unit";
+	density = 1
+	},
+/obj/decal/cleanable/blood/drip/high,
+/turf/unsimulated/floor/caution/west,
+/area/tutorial/basics/space)
 "Cp" = (
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
 /area/tutorial/basics/engineering)
+"Cr" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/space,
+/area/tutorial/basics/space)
 "Cv" = (
 /obj/machinery/light/incandescent/broken{
 	dir = 1
@@ -4035,7 +4224,7 @@
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
 "CY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable/yellow{
@@ -4172,7 +4361,7 @@
 	},
 /area/tutorial/basics/pool)
 "DS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -4341,9 +4530,6 @@
 	},
 /area/tutorial/basics/bar)
 "Fk" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/machinery/partyalarm{
 	pixel_y = 28;
 	duration = 2
@@ -4388,6 +4574,14 @@
 /obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/black,
 /area/tutorial/basics/science)
+"FF" = (
+/obj/range_target,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/tutorial/basics/space)
 "FG" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/white/checker2,
@@ -4449,16 +4643,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/tutorial/basics)
-"Ge" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/area/tutorial/basics/space)
 "Gf" = (
 /turf/unsimulated/floor/bluewhite/corner{
 	dir = 8
 	},
 /area/tutorial/basics/pool)
 "Gg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -4707,6 +4898,18 @@
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/black,
 /area/tutorial/basics/engineering)
+"HY" = (
+/obj/decal/cleanable/blood/drip/high,
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Breaks things down into metal/glass/waste";
+	icon = 'icons/obj/scrap.dmi';
+	icon_state = "Crusher_1";
+	name = "Crusher Unit";
+	density = 1
+	},
+/turf/unsimulated/floor/caution/west,
+/area/tutorial/basics/space)
 "Ib" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /obj/window/auto/reinforced/indestructible/extreme,
@@ -4906,6 +5109,12 @@
 	icon_state = "fblue2"
 	},
 /area/tutorial/basics)
+"Js" = (
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/turf/unsimulated/floor,
+/area/tutorial/basics)
 "Jv" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -4973,7 +5182,7 @@
 /turf/unsimulated/floor/black,
 /area/tutorial/basics/space)
 "JN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
@@ -5001,6 +5210,14 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
+"JY" = (
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/turf/unsimulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/tutorial/basics/pool)
 "JZ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -5025,6 +5242,9 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/basics/pool)
@@ -5074,6 +5294,14 @@
 	dir = 8
 	},
 /area/tutorial/basics/dock)
+"KH" = (
+/obj/range_target,
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/tutorial/basics/space)
 "KJ" = (
 /obj/pool/perspective{
 	dir = 9;
@@ -5083,17 +5311,6 @@
 	dir = 4
 	},
 /area/tutorial/basics/pool)
-"KK" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of an interesting alien-like creature. Judging by the order of the portraits, they must be new!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_maxi";
-	name = "pink creature photo";
-	pixel_y = 28
-	},
-/turf/simulated/wall/auto/jen,
-/area/tutorial/basics)
 "KL" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -5162,6 +5379,25 @@
 "Ld" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/tutorial/syndicateship)
+"Lf" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a dog who seems to be quite the culinary expert. He is learnding about trains And couldnt make it!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_mike";
+	name = "dog photo";
+	pixel_y = -28
+	},
+/turf/unsimulated/floor/blue/side,
+/area/tutorial/basics)
+"Lg" = (
+/turf/unsimulated/floor/carpet/clowncarpet/border,
+/area/tutorial/basics/space)
+"Lj" = (
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/tutorial/basics/space)
 "Ll" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8
@@ -5243,6 +5479,9 @@
 	icon_state = "picture_arch";
 	name = "pink sheep photo";
 	pixel_y = 28
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
@@ -5411,6 +5650,12 @@
 	dir = 8
 	},
 /area/shuttle/tutorial/syndicates)
+"Mi" = (
+/obj/machinery/light/incandescent/cool,
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 10
+	},
+/area/tutorial/basics/space)
 "Mk" = (
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor{
@@ -5618,6 +5863,14 @@
 	},
 /turf/unsimulated/floor,
 /area/tutorial/basics)
+"NJ" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/unsimulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area/tutorial/basics/pool)
 "NN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -5757,6 +6010,14 @@
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/circuit/red,
 /area/tutorial/basics/space)
+"Ox" = (
+/obj/disposalpipe/segment{
+	dir = 1
+	},
+/turf/unsimulated/floor/bluewhite/corner{
+	dir = 4
+	},
+/area/tutorial/basics/pool)
 "Oy" = (
 /obj/storage/crate/freezer,
 /obj/decal/cleanable/blood/drip/high,
@@ -5875,6 +6136,11 @@
 	name = "purple moth photo";
 	pixel_y = 28
 	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal,
+/obj/decal/stripe_caution,
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
@@ -6006,6 +6272,9 @@
 	name = "silly moth photo";
 	pixel_y = 28
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
@@ -6125,6 +6394,9 @@
 	name = "pink creature photo";
 	pixel_y = 28
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
@@ -6160,19 +6432,15 @@
 	},
 /turf/simulated/wall/auto/jen/blue,
 /area/tutorial/basics/medbay)
-"Re" = (
-/obj/grille/catwalk,
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/tutorial/basics/space)
 "Rl" = (
 /turf/simulated/wall/auto/jen/red,
 /area/tutorial/basics)
 "Rm" = (
 /obj/pool/perspective{
 	density = 0
+	},
+/obj/disposalpipe/segment{
+	dir = 1
 	},
 /turf/unsimulated/floor/bluewhite/corner{
 	dir = 8
@@ -6193,7 +6461,7 @@
 /area/tutorial/basics/dock)
 "Rs" = (
 /obj/decal/cleanable/blood/drip/med,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "Rt" = (
 /turf/simulated/wall/auto/jen/green,
@@ -6254,6 +6522,11 @@
 	dir = 4
 	},
 /area/tutorial/basics/science)
+"Sk" = (
+/obj/forcefield/meteorshield,
+/obj/forcefield/meteorshield,
+/turf/space,
+/area/tutorial/basics/space)
 "Sm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -6490,13 +6763,17 @@
 	icon_state = "fblue2"
 	},
 /area/tutorial/basics)
+"Ue" = (
+/obj/decal/cleanable/blood/drip/med,
+/turf/unsimulated/floor/carpet/clowncarpet,
+/area/tutorial/basics/space)
 "Uk" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
 /area/tutorial/basics/dock)
 "Un" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/reinforced{
 	dir = 1
 	},
@@ -6609,7 +6886,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/tutorial/syndicateship)
 "Vq" = (
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/plating,
 /area/tutorial/basics/engineering)
 "Vr" = (
@@ -6647,10 +6924,6 @@
 	icon_state = "L16"
 	},
 /area/tutorial/basics)
-"Wj" = (
-/turf/simulated/wall/auto/reinforced/jen,
-/turf/simulated/wall/auto/reinforced/jen,
-/area/tutorial/basics)
 "Wm" = (
 /obj/item/clothing/shoes/clown_shoes{
 	pixel_y = -1
@@ -6666,6 +6939,10 @@
 	dir = 4
 	},
 /area/tutorial/basics/bar)
+"Wp" = (
+/obj/mesh/catwalk,
+/turf/space,
+/area/tutorial/basics/space)
 "Wq" = (
 /obj/decal/cleanable/blood/drip/med,
 /obj/decoration/syndiepc,
@@ -6825,7 +7102,7 @@
 /area/tutorial/basics)
 "XS" = (
 /obj/decal/cleanable/blood/gibs,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/unsimulated/floor/cave/asteroid,
 /area/tutorial/basics/space)
 "XU" = (
 /obj/lattice{
@@ -6880,7 +7157,7 @@
 /turf/unsimulated/floor/orange,
 /area/tutorial/basics/engineering)
 "Yr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/reinforced{
 	dir = 1
 	},
@@ -6988,7 +7265,8 @@
 "Zg" = (
 /obj/machinery/door_control/bolter{
 	id = "tutorialhallway_exit";
-	pixel_y = -34
+	dir = 1;
+	pixel_y = -18
 	},
 /turf/unsimulated/floor,
 /area/tutorial/basics)
@@ -7023,7 +7301,7 @@
 	},
 /area/tutorial/basics)
 "Zs" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/reinforced{
 	dir = 1
 	},
@@ -7081,7 +7359,7 @@
 	},
 /area/tutorial/basics/medbay)
 "ZM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable/yellow{
@@ -7115,7 +7393,7 @@
 /area/tutorial/basics/medbay)
 "ZU" = (
 /obj/item/raw_material/scrap_metal,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/tutorial/basics/space)
 "ZY" = (
@@ -13635,32 +13913,32 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+Sk
 Xw
 MW
 Zl
@@ -13893,6 +14171,7 @@ aS
 aS
 aS
 aS
+ta
 aS
 aS
 aS
@@ -13917,8 +14196,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -14151,6 +14429,7 @@ aS
 aS
 aS
 aS
+ta
 aS
 aS
 aS
@@ -14175,8 +14454,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -14409,6 +14687,7 @@ aS
 aS
 aS
 aS
+ta
 aS
 aS
 aS
@@ -14433,8 +14712,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -14667,6 +14945,7 @@ aS
 aS
 aS
 aS
+ta
 aS
 aS
 aS
@@ -14691,8 +14970,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -14925,6 +15203,7 @@ aS
 aS
 aS
 aS
+ta
 aS
 aS
 aS
@@ -14949,8 +15228,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -15183,7 +15461,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 aS
 aS
 aS
@@ -15208,7 +15486,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -15413,7 +15691,7 @@ at
 OC
 cW
 cW
-Ge
+Aj
 yO
 dD
 Cx
@@ -15441,7 +15719,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 aS
 aS
 aS
@@ -15466,7 +15744,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -15671,7 +15949,7 @@ IV
 Iv
 jQ
 iC
-Ge
+Aj
 XS
 gA
 ry
@@ -15699,7 +15977,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 aS
 aS
 aS
@@ -15724,7 +16002,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -15930,7 +16208,7 @@ jQ
 Tf
 iC
 Rs
-Ge
+Aj
 aS
 tE
 aS
@@ -15957,7 +16235,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 aS
 aS
 aS
@@ -15982,7 +16260,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -16215,7 +16493,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 aS
 aS
 aS
@@ -16240,7 +16518,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -16481,6 +16759,10 @@ aS
 aS
 aS
 aS
+KH
+aS
+aS
+KH
 aS
 aS
 aS
@@ -16494,11 +16776,7 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -16756,7 +17034,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -17014,7 +17292,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -17272,7 +17550,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -17530,7 +17808,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -17764,6 +18042,7 @@ Gk
 Gk
 BD
 Hl
+XU
 aS
 aS
 aS
@@ -17787,8 +18066,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -18022,6 +18300,8 @@ lZ
 lZ
 OM
 wM
+gp
+kV
 aS
 aS
 aS
@@ -18044,9 +18324,7 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -18280,6 +18558,7 @@ Ms
 ky
 MI
 Hl
+gp
 aS
 aS
 aS
@@ -18303,8 +18582,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -18538,6 +18816,8 @@ zX
 zX
 dR
 Hl
+gp
+kV
 aS
 aS
 aS
@@ -18560,9 +18840,7 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -18796,6 +19074,7 @@ zX
 zX
 oj
 Ij
+gp
 aS
 aS
 aS
@@ -18819,8 +19098,7 @@ aS
 aS
 aS
 aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -19054,6 +19332,8 @@ zX
 zX
 Nv
 Hl
+gp
+kV
 aS
 aS
 aS
@@ -19067,6 +19347,7 @@ aS
 aS
 aS
 aS
+FF
 aS
 aS
 aS
@@ -19075,10 +19356,7 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
-aS
+ta
 Xw
 MW
 Zl
@@ -19312,7 +19590,7 @@ zX
 zX
 Cm
 Hl
-aS
+gp
 aS
 aS
 aS
@@ -19336,7 +19614,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -19570,6 +19848,8 @@ kW
 kW
 Hl
 Hl
+gp
+kV
 aS
 aS
 aS
@@ -19580,13 +19860,11 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
-aS
+aD
 dD
 dD
 dD
+dD
 aS
 aS
 aS
@@ -19594,7 +19872,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -19819,16 +20097,20 @@ XR
 TD
 Or
 fg
-Re
-Re
-Re
-Re
-Re
-Re
-Re
-Re
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
 hL
-BN
+op
+sY
+sY
+sY
+sY
 XU
 aS
 aS
@@ -19837,10 +20119,6 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
-aS
 dD
 dD
 dD
@@ -19852,7 +20130,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -20076,22 +20354,22 @@ XG
 XR
 XR
 qx
-Re
-Re
-Re
-Re
-Re
-Re
-Re
-Re
-Re
 xd
-BN
-gp
-aS
-aS
-aS
-aS
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+xd
+Wp
+Wp
+Wp
+Wp
+Wp
+Wp
 aS
 aS
 aS
@@ -20110,7 +20388,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -20344,7 +20622,11 @@ JN
 JN
 JN
 eu
-BN
+op
+op
+op
+op
+op
 gp
 aS
 aS
@@ -20354,10 +20636,6 @@ aS
 aS
 aS
 aS
-aS
-aS
-aS
-aS
 dD
 dD
 aS
@@ -20368,7 +20646,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -20604,9 +20882,9 @@ aS
 aS
 Or
 Or
+eJ
+eJ
 Or
-Wj
-Or
 Or
 aS
 aS
@@ -20626,7 +20904,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -20884,7 +21162,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -21142,7 +21420,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -21400,7 +21678,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -21658,7 +21936,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -21916,7 +22194,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -22174,7 +22452,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -22432,7 +22710,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -22690,7 +22968,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -22948,7 +23226,7 @@ aS
 aS
 aS
 aS
-aS
+ta
 Xw
 MW
 Zl
@@ -23196,17 +23474,17 @@ NS
 aG
 PY
 PY
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
-aS
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
+ta
 Xw
 MW
 Zl
@@ -24474,7 +24752,7 @@ iF
 OV
 XR
 XR
-cB
+Lf
 SM
 lT
 fD
@@ -25474,9 +25752,9 @@ aS
 aS
 aS
 Zs
-tM
-tM
-tM
+Wp
+Wp
+Wp
 Qs
 lG
 aE
@@ -25502,13 +25780,13 @@ GV
 GV
 Uc
 Sz
-KK
+iF
 QQ
 XR
 XR
-cB
+ar
 SM
-Zh
+lT
 LL
 oN
 NO
@@ -25732,9 +26010,9 @@ aS
 aS
 aS
 fT
-tM
-tM
-tM
+Wp
+Wp
+Wp
 mp
 sh
 EA
@@ -25990,9 +26268,9 @@ aS
 aS
 aS
 Zs
-tM
-tM
-tM
+Wp
+Wp
+Wp
 mp
 eU
 pd
@@ -26020,12 +26298,12 @@ Py
 CP
 ea
 nu
-XR
-XR
-cB
+Js
+Js
+ts
 Rm
-lT
-Gf
+Ox
+JY
 hm
 Gf
 lT
@@ -26248,9 +26526,9 @@ LF
 aS
 aS
 Zs
-tM
-tM
-tM
+Wp
+Wp
+Wp
 mp
 Mb
 II
@@ -26281,10 +26559,10 @@ QJ
 XR
 XR
 cB
-Ac
+xq
 Gf
 lT
-Gf
+bw
 lT
 Gf
 lT
@@ -26506,9 +26784,9 @@ aS
 aS
 LF
 Un
-tM
+Wp
 ZU
-tM
+Wp
 Qs
 Vb
 GU
@@ -26542,7 +26820,7 @@ uh
 SM
 Fk
 Gf
-lT
+NJ
 Gf
 lT
 Gf
@@ -26800,7 +27078,7 @@ EL
 SM
 MJ
 EF
-bh
+wA
 kf
 xR
 qS
@@ -27021,7 +27299,7 @@ aS
 tE
 aS
 aS
-GH
+Nt
 oZ
 Cd
 Cd
@@ -27316,11 +27594,11 @@ Gt
 CL
 aS
 aS
+Cr
 aS
 aS
 aS
-aS
-aS
+Cr
 aS
 aS
 aS
@@ -32200,11 +32478,11 @@ iF
 AD
 Td
 Di
-Di
+ME
 Di
 Kv
 Di
-Di
+ME
 Di
 Th
 hh
@@ -35314,7 +35592,7 @@ aS
 dD
 dD
 dD
-aS
+Aj
 aS
 aS
 aS
@@ -35572,7 +35850,7 @@ dD
 dD
 dD
 dD
-dD
+le
 dD
 dD
 aS
@@ -35830,7 +36108,7 @@ dD
 dD
 dD
 dD
-dD
+aa
 dD
 dD
 dD
@@ -36086,10 +36364,10 @@ dD
 dD
 dD
 dD
-dD
-dD
-dD
-dD
+sF
+Lj
+hX
+Mi
 dD
 dD
 dD
@@ -36344,10 +36622,10 @@ dD
 dD
 dD
 dD
-dD
-dD
-dD
-dD
+qV
+oe
+Ue
+pc
 dD
 dD
 dD
@@ -36602,10 +36880,10 @@ dD
 dD
 dD
 dD
-dD
-dD
-dD
-dD
+fl
+Ue
+hC
+Lg
 dD
 dD
 dD
@@ -36860,10 +37138,10 @@ dD
 dD
 dD
 dD
-dD
-dD
-dD
-dD
+dy
+Ue
+oe
+pc
 dD
 dD
 dD
@@ -37118,10 +37396,10 @@ aS
 dD
 dD
 dD
-dD
-dD
-dD
-dD
+Co
+HY
+HY
+wi
 dD
 dD
 aS

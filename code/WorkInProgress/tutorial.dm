@@ -692,3 +692,34 @@
 
 		if (new_turf)
 			A.set_loc(new_turf)
+
+/obj/warp_zone
+	name = "warp zone"
+	desc = "This could lead anywhere!"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	var/teleport_x = 1
+	var/teleport_y = 1
+	var/teleport_z = 1
+	density = 1
+	anchored = 1
+	var/list/destination
+	New()
+		..()
+		destination = list(teleport_x, teleport_y, teleport_z)
+	Bumped(atom/movable/A)
+		if (istype(A, /atom/movable))
+			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl(get_turf(src))
+			playsound(src.loc, "warp", 60, 1)
+			SPAWN(0.7 SECONDS)
+				qdel(swirl)
+			var/turf/new_turf = locate(destination[1], destination[2], destination[3])
+			if (new_turf)
+				A.set_loc(new_turf)
+				var/obj/decal/teleport_swirl/out/swirl_out = new /obj/decal/teleport_swirl/out(new_turf)
+				SPAWN(0.7 SECONDS)
+					qdel(swirl_out)
+				playsound(A.loc, "warp", 60, 1)
+		..()
+	proc/set_destination(var/x, var/y, var/z)
+		destination = list(x, y, z)
