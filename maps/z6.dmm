@@ -63,17 +63,6 @@
 "aq" = (
 /turf/simulated/wall/auto/jen/yellow,
 /area/tutorial/basics/engineering)
-"ar" = (
-/obj/fakeobject{
-	anchored = 1;
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_kafrafriend2";
-	name = "friend #2 photo";
-	pixel_y = -28;
-	desc = "Another photograph of a dog. This is too much!"
-	},
-/turf/unsimulated/floor/blue/side,
-/area/tutorial/basics)
 "at" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -364,6 +353,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/tutorial/basics/space)
+"ca" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a fluffy sheep with pink hair. Isn't this the founder of Cafi's Coffee?";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_arch";
+	name = "pink sheep photo";
+	pixel_x = -28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "cf" = (
 /obj/fakeobject/beepsky{
 	pixel_y = -10;
@@ -446,14 +446,6 @@
 /area/tutorial/basics/science)
 "dj" = (
 /obj/table/glass/reinforced/auto,
-/obj/fakeobject{
-	anchored = 1;
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_kafrafriend1";
-	name = "friend photo";
-	pixel_y = -28;
-	desc = "A photograph of a friend of a friend! Again!"
-	},
 /turf/unsimulated/floor/blue/side,
 /area/tutorial/basics)
 "dk" = (
@@ -1848,6 +1840,19 @@
 	icon_state = "L12"
 	},
 /area/tutorial/basics)
+"mm" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafrafriend1";
+	name = "friend photo";
+	desc = "A photograph of a friend of a friend! Again!";
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/stairs/wood2/wide{
+	dir = 6
+	},
+/area/tutorial/basics)
 "mn" = (
 /obj/decal/tile_edge/check{
 	icon_state = "check1"
@@ -1899,14 +1904,6 @@
 /area/tutorial/basics/space)
 "mI" = (
 /obj/table/glass/reinforced/auto,
-/obj/fakeobject{
-	anchored = 1;
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_kafra";
-	name = "dog #2 photo";
-	pixel_y = -28;
-	desc = "Another photograph of a dog. This is too much!"
-	},
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
@@ -2334,14 +2331,6 @@
 /area/tutorial/basics/science)
 "pe" = (
 /obj/storage/closet/wardrobe/pride,
-/obj/fakeobject{
-	anchored = 1;
-	desc = "The skunch.";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_saturn";
-	name = "stock image of an animal";
-	pixel_y = 28
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -2499,14 +2488,6 @@
 /turf/simulated/floor/orangeblack,
 /area/tutorial/basics/engineering)
 "qn" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of a cool bunny!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_lucia";
-	name = "bunny photo";
-	pixel_y = -28
-	},
 /obj/table/glass/reinforced/auto,
 /obj/item/storage/box/donkpocket_kit{
 	pixel_x = 1;
@@ -2890,6 +2871,17 @@
 /obj/decal/cleanable/blood/drip/low,
 /turf/space,
 /area/tutorial/basics/space)
+"sB" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a cool bunny!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_lucia";
+	name = "bunny photo";
+	pixel_x = -28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "sC" = (
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/carpet/blue{
@@ -3154,8 +3146,22 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/tutorial/basics)
 "ve" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4
+/obj/machinery/light/small/floor,
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafrafriend2";
+	name = "friend #2 photo";
+	desc = "Another photograph of a dog. This is too much!";
+	pixel_x = 28
+	},
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_gracie";
+	name = "bunny #2 photo";
+	desc = "Another photograph of a bunny. They're covered in spots!";
+	pixel_x = 28
 	},
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
@@ -3419,6 +3425,17 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/wood/two,
 /area/tutorial/basics)
+"wS" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "The skunch.";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_saturn";
+	name = "skunk photo";
+	pixel_x = -28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "wT" = (
 /obj/table/glass/reinforced/auto,
 /obj/random_item_spawner/snacks/one_or_zero,
@@ -3634,8 +3651,14 @@
 /turf/unsimulated/floor/blue,
 /area/tutorial/basics)
 "yG" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8
+/obj/machinery/light/small/floor,
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of an interesting alien-like creature. Judging by the order of the portraits, they must be new!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_maxi";
+	name = "pink creature photo";
+	pixel_x = -28
 	},
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
@@ -3951,6 +3974,17 @@
 	icon_state = "floor2"
 	},
 /area/tutorial/basics/dock)
+"AZ" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a very cute moth. She must've been the first one here!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_lily";
+	name = "purple moth photo";
+	pixel_x = -28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "Bf" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -4166,6 +4200,17 @@
 	},
 /turf/unsimulated/floor/white/checker2,
 /area/tutorial/basics/civilian)
+"CE" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A photograph of a dog who seems to be quite the culinary expert. He is learnding about trains And couldnt make it!";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_mike";
+	name = "dog photo";
+	pixel_x = -28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "CH" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1
@@ -5379,17 +5424,6 @@
 "Ld" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/tutorial/syndicateship)
-"Lf" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of a dog who seems to be quite the culinary expert. He is learnding about trains And couldnt make it!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_mike";
-	name = "dog photo";
-	pixel_y = -28
-	},
-/turf/unsimulated/floor/blue/side,
-/area/tutorial/basics)
 "Lg" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border,
 /area/tutorial/basics/space)
@@ -5471,14 +5505,6 @@
 "LA" = (
 /obj/machinery/clothingbooth{
 	everything_is_free = 1
-	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of a fluffy sheep with pink hair. Isn't this the founder of Cafi's Coffee?";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_arch";
-	name = "pink sheep photo";
-	pixel_y = 28
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -5709,6 +5735,17 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/tutorial/transit)
+"MD" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafrafriend2";
+	name = "friend #2 photo";
+	desc = "Another photograph of a dog. This is too much!";
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "ME" = (
 /obj/decal/tile_edge/carpet,
 /turf/unsimulated/floor/carpet/clowncarpet,
@@ -6128,14 +6165,6 @@
 /turf/unsimulated/floor/white/checker2,
 /area/tutorial/basics/civilian)
 "OV" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of a very cute moth. She must've been the first one here!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_lily";
-	name = "purple moth photo";
-	pixel_y = 28
-	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -6264,14 +6293,6 @@
 /obj/item/clothing/shoes/goku{
 	pixel_y = -6
 	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "This doesn't appear to be a photograph at all, it's a crude drawing of a moth on a Discount Dans napkin.";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_ly";
-	name = "silly moth photo";
-	pixel_y = 28
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -6385,14 +6406,6 @@
 "QQ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
-	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A photograph of an interesting alien-like creature. Judging by the order of the portraits, they must be new!";
-	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_maxi";
-	name = "pink creature photo";
-	pixel_y = 28
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6555,6 +6568,17 @@
 	dir = 8
 	},
 /area/tutorial/basics/pool)
+"St" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_avery";
+	name = "friend #2 photo";
+	desc = "This is straight up an image of Izumi Sakurai from Nichijou. Woah.";
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "Sv" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
@@ -6724,6 +6748,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/tutorial/basics/medbay)
+"TL" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_cylia";
+	name = "kitty photo";
+	desc = "A photograph of a kitty cat. Mrrow!";
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "TO" = (
 /obj/decal/poster/wallsign/engine_sign{
 	dir = 1
@@ -6846,7 +6881,7 @@
 /turf/space,
 /area/tutorial/basics/space)
 "US" = (
-/obj/machinery/light/incandescent/netural,
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/wood,
 /area/tutorial/basics)
 "Vb" = (
@@ -7026,6 +7061,17 @@
 /turf/unsimulated/floor/blueblack{
 	dir = 10
 	},
+/area/tutorial/basics)
+"Xn" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_kafra";
+	name = "dog #2 photo";
+	desc = "Another photograph of a dog. This is too much!";
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/wood,
 /area/tutorial/basics)
 "Xp" = (
 /obj/fakeobject/airlock_broken/firelock{
@@ -7278,6 +7324,17 @@
 	dir = 4
 	},
 /area/tutorial/basics/pool)
+"Zi" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "This doesn't appear to be a photograph at all, it's a crude drawing of a moth on a Discount Dans napkin.";
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_ly";
+	name = "silly moth photo";
+	pixel_x = -28
+	},
+/turf/unsimulated/floor/stairs/wood2/wide,
+/area/tutorial/basics)
 "Zl" = (
 /turf/space,
 /area/space)
@@ -24752,7 +24809,7 @@ iF
 OV
 XR
 XR
-Lf
+cB
 SM
 lT
 fD
@@ -25784,7 +25841,7 @@ iF
 QQ
 XR
 XR
-ar
+cB
 SM
 lT
 LL
@@ -31189,13 +31246,13 @@ IH
 gc
 mO
 gc
-hh
-ra
-hh
-hh
+AZ
+Zi
+ca
+wS
 yG
-hh
-uF
+CE
+sB
 iF
 aS
 aS
@@ -33769,13 +33826,13 @@ uF
 gc
 gC
 gc
-hh
-MY
-hh
-hh
+Xn
+mm
+MD
+TL
 ve
+St
 hh
-IH
 iF
 aS
 aS
