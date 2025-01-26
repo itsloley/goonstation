@@ -3358,6 +3358,17 @@
 "wp" = (
 /turf/unsimulated/floor/white,
 /area/tutorial/basics/medbay)
+"wy" = (
+/obj/fakeobject{
+	anchored = 1;
+	icon = 'icons/misc/tutorial.dmi';
+	icon_state = "picture_zora";
+	name = "AHH I DIDNT HAVE TIME FOR THIS";
+	desc = "AAAAHHHH";
+	pixel_x = 28
+	},
+/turf/unsimulated/floor/wood,
+/area/tutorial/basics)
 "wA" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/clothing/gloves/water_wings,
@@ -4056,6 +4067,11 @@
 /turf/unsimulated/floor/blue/side{
 	dir = 1
 	},
+/area/tutorial/basics)
+"BA" = (
+/obj/machinery/light/small/floor,
+/obj/decal/tile_edge/carpet,
+/turf/unsimulated/floor/carpet/clowncarpet,
 /area/tutorial/basics)
 "BD" = (
 /obj/decal/tile_edge/stripe/big{
@@ -32537,7 +32553,7 @@ Td
 Di
 ME
 Di
-Kv
+BA
 Di
 ME
 Di
@@ -33832,7 +33848,7 @@ MD
 TL
 ve
 St
-hh
+wy
 iF
 aS
 aS
