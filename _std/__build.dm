@@ -173,7 +173,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SEASON_SPRING 1
 //#define SEASON_SUMMER 1
 //#define SEASON_AUTUMN 1
-#define XMAS 1
+//#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
 //#define ENABLE_ARTEMIS // Enables artemis for development
@@ -226,8 +226,8 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
-#define BUILD_TIME_MONTH 12
-#define BUILD_TIME_DAY 20
+#define BUILD_TIME_MONTH 2
+#define BUILD_TIME_DAY 23
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30
