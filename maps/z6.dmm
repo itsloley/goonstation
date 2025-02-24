@@ -3362,9 +3362,9 @@
 /obj/fakeobject{
 	anchored = 1;
 	icon = 'icons/misc/tutorial.dmi';
-	icon_state = "picture_zora";
-	name = "AHH I DIDNT HAVE TIME FOR THIS";
-	desc = "AAAAHHHH";
+	icon_state = "picture_arc";
+	name = "arcade flooring photo";
+	desc = "This is a photograph of the carpet at an arcade a- wh- what? What the fuck? That's a whole ass person!";
 	pixel_x = 28
 	},
 /turf/unsimulated/floor/wood,
@@ -6589,7 +6589,7 @@
 	anchored = 1;
 	icon = 'icons/misc/tutorial.dmi';
 	icon_state = "picture_avery";
-	name = "friend #2 photo";
+	name = "izumi sakurai photo";
 	desc = "This is straight up an image of Izumi Sakurai from Nichijou. Woah.";
 	pixel_x = 28
 	},
