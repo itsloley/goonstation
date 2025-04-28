@@ -2400,8 +2400,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/brownie
 
 /datum/cookingrecipe/oven/burger/kityburger
-	item1 = /obj/item/kity
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	ingredients = list(\
+	/obj/item/kity
+	/obj/item/reagent_containers/food/snacks/ingredient/dough)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/kityburger
 	category = "Burgers"
