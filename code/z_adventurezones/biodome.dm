@@ -801,7 +801,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if (!viewable_atoms.Find(target_r))
 			return
 
-		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
+		var/list/affected = drawLineObj(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
 		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
@@ -902,10 +902,10 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/dat = ""
 		dat += "<b>There's several runes inscribed here ...</b><BR><BR>"
-		dat += "<A href='?src=\ref[src];north=1'>Touch the first rune</A><BR>"
-		dat += "<A href='?src=\ref[src];east=1'>Touch the second rune</A><BR>"
-		dat += "<A href='?src=\ref[src];south=1'>Touch the third rune</A><BR>"
-		dat += "<A href='?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];north=1'>Touch the first rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];east=1'>Touch the second rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];south=1'>Touch the third rune</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];west=1'>Touch the fourth rune</A><BR>"
 
 		src.add_dialog(usr)
 		usr.Browse("[dat]", "window=rtab;size=400x300")

@@ -1745,7 +1745,7 @@
 
 			else
 
-				dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
+				dat += "Status: <a href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
 			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]\]</b><br>"
 
@@ -2248,7 +2248,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 			for(var/count=0, count<4, count++)
 
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				var/list/affected = drawLineObj(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				for(var/obj/O in affected)
 					SPAWN(0.6 SECONDS) qdel(O)
@@ -3091,7 +3091,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=40)
+						master.navigate_to(target, max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3416,12 +3416,12 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(!(protected in view(7,master)))
 					return 0
 				//Has our buddy been attacked??
-				if(protected.lastattacker && (protected.lastattackertime + 40) >= world.time)
-					if(protected.lastattacker != protected)
+				if(protected.lastattacker?.deref() && (protected.lastattackertime + 40) >= world.time)
+					if(protected.lastattacker.deref() != protected)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						src.arrest_target = protected.lastattacker
+						src.arrest_target = protected.lastattacker.deref()
 						src.follow_attempts = 0
 						src.arrest_attempts = 0
 						return 1
@@ -3613,9 +3613,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(master.emotion != desired_emotion)
 				master.set_emotion(desired_emotion)
 
-			if(state != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
-				if(prob(tip_prob) && !ON_COOLDOWN(src.master, "tip", 3 SECONDS))
-					master.speak(get_random_tip())
+
+
 
 			switch (state)
 				if (STATE_FINDING_BEACON)
@@ -3639,6 +3638,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						state = STATE_FINDING_BEACON
 						return
 
+					if(prob(tip_prob) && !src.distracted && !GET_COOLDOWN(src.master, "tip"))
+						master.speak(get_random_tip())
+						ON_COOLDOWN(src.master, "tip", 10 SECONDS)
+
 					if (!src.distracted && prob(20))
 						src.look_for_neat_thing()
 
@@ -3648,7 +3651,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=30)
+							master.navigate_to(current_beacon_loc, max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -3658,20 +3661,36 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
 					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
+					ON_COOLDOWN(src.master, "tip", 4 SECONDS)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
 						awaiting_beacon = max(awaiting_beacon, 1) //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
 					else
 						state = STATE_POST_TOUR_IDLE
-						tour_delay = 30
-						master.speak("And that concludes the tour session.  Please visit the gift shop on your way out.")
+						var/obj/machinery/guardbot_dock/dock = null
+						dock = locate() in master.loc
+						if(dock && istype(dock))
+							// Check for tour console, manual wake if present, auto wake if not
+							if (locate(/obj/machinery/computer/tour_console) in orange(1, src.master))
+								dock.connect_robot(master,0)
+							else
+								dock.connect_robot(master,2)
+							return
+						else
+							desired_emotion = "angry"
+							if(master.emotion != desired_emotion)
+								master.set_emotion(desired_emotion)
+							master.speak(pick("My dock... it's missing!", "Where's my dock? I was ready for a break.", "Hey you sleaze! My bed!"))
+							tour_delay = 30
 					return
 
 				if (STATE_POST_TOUR_IDLE)
 					if (tour_delay-- > 0)
 						return
-
+					desired_emotion = "happy"
+					if(master.emotion != desired_emotion)
+						master.set_emotion(desired_emotion)
 					next_beacon_id = initial(next_beacon_id)
 					state = STATE_FINDING_BEACON
 					neat_things = 0
@@ -4059,7 +4078,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				master.speak(pick("Hey, who turned out the lights?","Error: Visual sensor impaired!","Whoa hey, what's the big deal?","Where did everyone go?"))
 
 			if (escape_counter-- > 0)
-				flick("robuddy-ghostfumble", master)
+				FLICK("robuddy-ghostfumble", master)
 				master.visible_message(SPAN_ALERT("[master] fumbles around in the sheet!"))
 			else
 				master.visible_message("[master] cuts a hole in the sheet!")
@@ -4332,13 +4351,13 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += "<br>Configuration Switches:<br><table border='1' style='background-color:#7A7A7A'><tr>"
 			for (var/i = 8, i >= 1, i >>= 1)
 				var/styleColor = (net_number & i) ? "#60B54A" : "#CD1818"
-				dat += "<td style='background-color:[styleColor]'><a href='?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
+				dat += "<td style='background-color:[styleColor]'><a href='byond://?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
 
 			dat += "</tr></table>"
 
@@ -4788,7 +4807,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 			dat += "<b>Guide:</b> <center>\[[linked_bot.name]]</center><br>"
 
 			if ((linked_bot in orange(1, src)) && linked_bot.charge_dock)
-				dat += "<center><a href='?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
+				dat += "<center><a href='byond://?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
 
 			else
 				var/area/guideArea = get_area(linked_bot)
@@ -4868,7 +4887,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 
 		else
 
-			dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
+			dat += "Status: <a href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
 		dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
 
@@ -5014,6 +5033,17 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	New()
 		..()
 		src.hat.name = "Mabel's beret"
+
+/obj/machinery/bot/guardbot/old/tourguide/neon
+	name = "Earle"
+	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Earle'."
+	access_lookup = "Staff Assistant"
+	beacon_freq = FREQ_TOUR_NAVBEACON
+	HatToWear = /obj/item/clothing/head/sea_captain
+
+	New()
+		..()
+		src.hat.name = "Earle's ship captain hat"
 
 /obj/machinery/computer/hug_console
 	name = "Hug Console"

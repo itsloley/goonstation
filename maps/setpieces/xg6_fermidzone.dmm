@@ -1296,7 +1296,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ft" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1427,7 +1427,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "fW" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
@@ -1450,7 +1450,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "gd" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4080,7 +4080,7 @@
 	})
 "qB" = (
 /obj/railing/yellow/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -4118,7 +4118,7 @@
 	status = 2
 	},
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4227,7 +4227,7 @@
 	})
 "rh" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -7239,7 +7239,7 @@
 	})
 "Dz" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -7314,7 +7314,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "DO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/plating,
 /area/solarium{
@@ -8060,7 +8060,7 @@
 "Hf" = (
 /obj/machinery/light/small,
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8289,7 +8289,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8304,7 +8304,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "HX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -9644,7 +9644,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "NB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
@@ -10210,11 +10210,9 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "PN" = (
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/syndicate/commander{
 	dir = 4;
-	icon_state = "datasec";
-	name = "Shen Kuo Observatory Announcement Console";
-	req_access_txt = "76"
+	name = "Shen Kuo Observatory Announcement Console"
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/redblack{
@@ -12303,7 +12301,7 @@
 /obj/machinery/computer/security/telescreen{
 	layer = 30;
 	name = "Conference Room Display";
-	network = "XG65";
+	camera_networks = list("XG6");
 	pixel_x = -8;
 	pixel_y = 1
 	},

@@ -5,7 +5,7 @@
 /datum/artifact/robot
 	associated_object = /obj/machinery/artifact/robot
 	type_name = "Drone"
-	type_size = ARTIFACT_SIZE_MEDIUM
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
 	validtypes = list("ancient")
@@ -192,7 +192,7 @@
 		var/action = pick("hit", "strike", "bonk")
 		user.visible_message(SPAN_COMBAT("<b>[user] [action]s [target] with a strange club!</b>"))
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 // AI bits are in artifact_robot.dm

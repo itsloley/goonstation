@@ -375,14 +375,14 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
 	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate)
-	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)
-	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/knight)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/specialist/knight)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security/improved)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/swat)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
-	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/ntso)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/nanotrasen)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/viking)
@@ -444,6 +444,9 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		return
 
 	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), SLOT_EARS)
+
+	battler.equip_sensory_items()
+	battler.equip_body_traits()
 
 	// Battle royale crewmembers are rainbow flavored
 	var/obj/item/clothing/under/jumpsuit = null
@@ -541,7 +544,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), SLOT_L_STORE)
 	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), SLOT_R_STORE)
 
-	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
+	var/obj/item/card/id/gold/captains_spare/I = new /obj/item/card/id/gold/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.access |= list(access_maxsec, access_armory)

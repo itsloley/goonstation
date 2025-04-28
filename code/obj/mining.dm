@@ -198,7 +198,7 @@
 		// this used to use an area, which meant it only checked
 		var/turf/origin = get_turf(src)
 		var/unacceptable = FALSE
-		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
+		for (var/turf/T in block(locate(origin.x-1, origin.y-1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
 
 			for (var/mob/living/L in T)
 				if(ismobcritter(L)) // we don't care about critters
@@ -372,6 +372,7 @@
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
 	anchored = ANCHORED_ALWAYS
+	req_access = list(access_mining, access_mining_outpost)
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -657,7 +658,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.set_opacity(0)
 				M.set_density(0)
-				M.invisibility = INVIS_INFRA
+				M.invisibility = INVIS_MESON
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
@@ -747,7 +748,7 @@
 				else
 					var/mob/living/carbon/human/H = usr
 					if(!src.allowed(H))
-						boutput(usr, SPAN_ALERT("Access denied. Please contact the Chief Engineer or Captain to access the override."))
+						boutput(usr, SPAN_ALERT("Access denied."))
 					else
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
@@ -767,7 +768,7 @@
 	var/temp = null
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
-	req_access = list(access_engineering_chief)
+	req_access = list(access_mining)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
@@ -777,6 +778,9 @@
 			src.connection_scan()
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(!src.allowed(user))
+			boutput(user, SPAN_ALERT("Access Denied."))
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "MineralMagnet", src.name)
@@ -920,7 +924,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			. = ..()
 			if (length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
@@ -1040,6 +1044,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#114444"
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
+
+	plasma_reef
+		name = "dense plasmacoral"
+		desc = "A large formation of plasmacoral, completely impassable."
+		invincible = TRUE
+		default_material = "plasmacoral"
+		mat_changename = TRUE
+		uses_default_material_appearance = FALSE
+		stone_color = "#A114FF"
+		color = "#A114FF"
 
 	algae
 		name = "sea foam"
@@ -1540,7 +1554,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -1993,12 +2007,12 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
-		flick("hedron-WtoM", src)
+		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
-		flick("hedron-MtoW", src)
+		FLICK("hedron-MtoW", src)
 		..()
 
 	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
@@ -2278,7 +2292,8 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
+		var/datum/action/bar/private/icon/callback/teleport = new(user, cargo, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null, src)
+		actions.start(teleport, user)
 		return TRUE
 
 
@@ -2724,6 +2739,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()
