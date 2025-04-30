@@ -2401,7 +2401,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 
 /datum/cookingrecipe/oven/burger/kityburger
 	ingredients = list(\
-	/obj/item/kity
+	/obj/item/kity,
 	/obj/item/reagent_containers/food/snacks/ingredient/dough)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/kityburger

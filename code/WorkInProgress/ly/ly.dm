@@ -83,7 +83,7 @@
 	var/turf/pickedstart = locate(startx, starty, kitytarget.z)
 	var/obj/gibshark/kity/Q = new /obj/gibshark/kity(pickedstart)
 	Q.sharktarget2 = kitytarget
-	Q.caller = usr
+	Q.caller_mob = usr
 	Q.sharkspeed = speed
 
 /obj/gibshark/irios
@@ -128,7 +128,7 @@
 	var/turf/pickedstart = locate(startx, starty, iriostarget.z)
 	var/obj/gibshark/irios/Q = new /obj/gibshark/irios(pickedstart)
 	Q.sharktarget2 = iriostarget
-	Q.caller = usr
+	Q.caller_mob = usr
 	Q.sharkspeed = speed
 
 /proc/robloxfilter(var/string)

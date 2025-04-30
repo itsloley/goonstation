@@ -174,7 +174,7 @@
 	electric_expose(var/power = 1)
 		return 0
 
-	vomit()
+	vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
 		..()
 		return
 
