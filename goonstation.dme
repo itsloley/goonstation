@@ -2546,6 +2546,7 @@
 #include "code\WorkInProgress\ly\mothplush.dm"
 #include "code\WorkInProgress\ly\mysterybox.dm"
 #include "code\WorkInProgress\ly\smile.dm"
+#include "code\WorkInProgress\ly\solemnlament.dm"
 #include "code\WorkInProgress\ly\toomanycooks.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
 #include "code\WorkInProgress\pali\blob_fabricator.dm"
